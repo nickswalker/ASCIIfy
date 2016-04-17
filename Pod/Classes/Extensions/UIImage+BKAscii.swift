@@ -25,46 +25,56 @@
 #if os(iOS)
 import UIKit
 
-extension UIImage {
+public typealias ImageHandler = ((UIImage) -> Void)?
+public typealias StringHandler = ((String) -> Void)?
+
+public extension UIImage {
     func bk_asciiImage() -> UIImage {
-        var converter = AsciiConverter()
+        let converter = AsciiConverter()
         return converter.convertImage(self)
     }
 
     func bk_asciiImageWithFont(font: UIFont) -> UIImage {
-        var converter = AsciiConverter()
+        let converter = AsciiConverter()
         converter.font = font
         return converter.convertImage(self)
     }
 
     func bk_asciiString() -> String {
-        var converter = AsciiConverter()
+        let converter = AsciiConverter()
         return converter.convertToString(self)
     }
 
-    func bk_asciiImageCompletionHandler(handler: (UIImage) -> Void) {
-        var converter = AsciiConverter()
-        converter.convertImage(self, completionHandler: { (asciiImage: UIImage) in handler(asciiImage) })
+    func bk_asciiImageCompletionHandler(handler: ImageHandler) {
+        let converter = AsciiConverter()
+        converter.convertImage(self) { handler?($0)}
     }
 
-    func bk_asciiImageWithFont(font: UIFont, completionHandler handler: (UIImage) -> Void) {
-        var converter = AsciiConverter()
+    func bk_asciiImageWithFont(font: UIFont, completionHandler handler: ImageHandler) {
+        let converter = AsciiConverter()
         converter.font = font
-        converter.convertImage(self, completionHandler: { (asciiImage: UIImage) in handler(asciiImage) })
+        converter.convertImage(self) { handler?($0)}
     }
 
-    func bk_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool, completionHandler handler: (UIImage) -> Void) {
-        var converter = AsciiConverter()
+    func bk_asciiImage(bgColor: UIColor, grayscale: Bool) -> UIImage {
+        let converter = AsciiConverter()
+        converter.backgroundColor = bgColor
+        converter.grayscale = grayscale
+        return converter.convertImage(self)
+    }
+
+    func bk_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool, completionHandler handler: ImageHandler) {
+        let converter = AsciiConverter()
         converter.backgroundColor = bgColor
         converter.columns = columns
         converter.reversedLuminance = reversed
         converter.grayscale = grayscale
-        converter.convertImage(self, completionHandler: { (asciiImage: UIImage) in handler(asciiImage) })
+        converter.convertImage(self) { handler?($0) }
     }
 
-    func bk_asciiStringCompletionHandler(handler: (String) -> Void) {
-        var converter = AsciiConverter()
-        converter.convertToString(self, completionHandler: { (asciiString: String) in handler(asciiString) })
+    func bk_asciiStringCompletionHandler(handler: StringHandler) {
+        let converter = AsciiConverter()
+        converter.convertToString(self) { handler?($0) }
     }
 }
 #endif

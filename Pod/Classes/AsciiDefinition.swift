@@ -23,7 +23,7 @@
 //
 import Foundation
 
-class AsciiDefinition {
+public class AsciiDefinition {
     private let metrics: [Metric]
     struct Metric {
         let ascii: String
@@ -45,12 +45,9 @@ class AsciiDefinition {
     }
 
     func stringForLuminance(luminance: Double) -> String? {
-        for m in metrics {
-            if m.luminance == luminance {
-                return m.ascii
-            }
-        }
-        return nil
+        let deltas = metrics.map{($0, abs($0.luminance - luminance))}
+        let closest = deltas.minElement{$0.1 < $1.1}
+        return closest?.0.ascii
     }
 
     private static func buildDataFromMapping(stringToLumMapping: [Double: String]) -> [Metric] {

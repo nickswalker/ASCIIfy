@@ -40,16 +40,13 @@ public class AsciiConverter {
         
     }
 
-    init(luminanceToStringMapping: [Double: String]) {
+    public init(luminanceToStringMapping: [Double: String]) {
         definition = AsciiDefinition(luminanceToStringMapping: luminanceToStringMapping)
     }
 
-    init(definition: AsciiDefinition) {
+    public init(definition: AsciiDefinition) {
         self.definition = definition
     }
-
-
-
 
     func isTransparent() -> Bool {
         return backgroundColor == UIColor.clearColor()
@@ -73,7 +70,7 @@ public class AsciiConverter {
 }
 
 #if os(iOS)
-extension AsciiConverter {
+public extension AsciiConverter {
     func convertImage(input: UIImage) -> UIImage {
         var asciiGridWidth = gridWidth(input.size.width)
         var output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: asciiGridWidth, reversed: reversedLuminance, grayscale: grayscale)
@@ -90,48 +87,46 @@ extension AsciiConverter {
 
     func convertImage(input: UIImage, withFont font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool) -> UIImage {
 
-        var opaque = !isTransparent()
-        var fontSize = font.pointSize
+        let opaque = !isTransparent()
+        let fontSize = font.pointSize
         var asciiGridWidth = columns
         var scaledImage = downscaleImage(input, withFactor: asciiGridWidth)
         var pixelGrid = pixelGridForImage(scaledImage)
-        UIGraphicsBeginImageContextWithOptions(input.size, opaque, 0.0)
-        var ctx = UIGraphicsGetCurrentContext()
-        var rect = CGRectMake(0, 0, scaledImage.size.width, scaledImage.size.height)
+        UIGraphicsBeginImageContextWithOptions(input.size, false, 0.0)
+
+        // Setup background
+        let ctx = UIGraphicsGetCurrentContext()
+        let ctxRect = CGRect(x: 0, y: 0, width: input.size.width, height: input.size.height)
         if opaque {
             CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
+            CGContextFillRect(ctx, ctxRect)
         } else {
-            CGContextClearRect(ctx, rect)
+            CGContextClearRect(ctx, ctxRect)
         }
-        CGContextFillRect(ctx, CGRectMake(0, 0, input.size.width, input.size.height))
-        let fontName = font.fontName.cStringUsingEncoding(NSMacOSRomanStringEncoding)
-        CGContextSetTextDrawingMode(ctx, .Fill)
-        UIColor.blackColor().setFill()
-        var transform = CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, 0.0)
-        CGContextSetTextMatrix(ctx, transform)
-        var asciiDefinition = self.definition
+
         var blockWidth = input.size.width / CGFloat(pixelGrid.width)
         var blockHeight = input.size.height / CGFloat(pixelGrid.height)
         let attributes = [NSFontAttributeName: font]
-        for var x = 0; x < pixelGrid.width; x++ {
-            for var y = 0; y < pixelGrid.height; y++ {
-                var col = x
-                var row = y
+        for row in 0..<pixelGrid.height {
+            for col in 0..<pixelGrid.width {
                 var block = pixelGrid.block(atRow: row, column: col)
                 var luminance = self.luminance(block)
-                var asciiResult = asciiDefinition.stringForLuminance(Double(luminance))!
+                var asciiResult = definition.stringForLuminance(Double(luminance))!
                 var rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
-                if !grayscale {
-                    CGContextSetFillColorWithColor(ctx, UIColor(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0).CGColor)
+                if !grayscale || true {
+                    let color = UIColor(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
+                     CGContextSetFillColorWithColor(ctx, color.CGColor)
                 } else {
-                    CGContextSetGrayFillColor(ctx, luminance, 1.0)
+                    let color = UIColor(white: luminance, alpha: 1.0)
+                    CGContextSetFillColorWithColor(ctx, color.CGColor)
                 }
-                let foundationVersion = asciiResult as! NSString
-                foundationVersion.drawAtPoint(rect.origin, withAttributes: attributes)
+
+
+                asciiResult.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
 
             }
         }
-        var renderedImage = UIGraphicsGetImageFromCurrentImageContext()
+        let renderedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return renderedImage
     }
@@ -165,12 +160,12 @@ extension AsciiConverter {
         })
     }
 
-    func pixelGridForImage(image: UIImage) -> BlockGrid {
+    private func pixelGridForImage(image: UIImage) -> BlockGrid {
         var imageRef = image.CGImage!
         var width = CGImageGetWidth(imageRef)
         var height = CGImageGetHeight(imageRef)
         var colorSpace = CGColorSpaceCreateDeviceRGB()
-        var rawData = UnsafeMutablePointer<Int>(malloc(height * width * 4))
+        var rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
         var bytesPerPixel = 4
         var bytesPerRow = bytesPerPixel * width
         var bitsPerComponent = 8
@@ -180,8 +175,8 @@ extension AsciiConverter {
         CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), imageRef)
         var grid = BlockGrid(width: width, height: height)
         var block: BlockGrid.Block
-        for var row = 0; row < width; row++ {
-            for var col = 0; col < height; col++ {
+        for var row = 0; row < height; row++ {
+            for var col = 0; col < width; col++ {
                 var byteIndex = (bytesPerRow * col) + row * bytesPerPixel
                 let r = Double(rawData[byteIndex]) / 255.0
                 let g = Double(rawData[byteIndex + 1]) / 255.0
@@ -194,7 +189,7 @@ extension AsciiConverter {
         return grid
     }
 
-    func downscaleImage(image: UIImage, withFactor scaleFactor: Int) -> UIImage {
+    private func downscaleImage(image: UIImage, withFactor scaleFactor: Int) -> UIImage {
         var scaleFactor = CGFloat(scaleFactor)
         if scaleFactor <= 1 {
             return image
@@ -207,7 +202,7 @@ extension AsciiConverter {
         var newHeight = ratio * image.size.height
         var size = CGSize(width: newWidth, height: newHeight)
         UIGraphicsBeginImageContextWithOptions(size, true, 1.0)
-        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        image.drawInRect(CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         var scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledImage
