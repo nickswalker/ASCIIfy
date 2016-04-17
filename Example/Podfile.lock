@@ -1,0 +1,16 @@
+PODS:
+  - ASCIIfy (0.1.0)
+
+DEPENDENCIES:
+  - ASCIIfy (from `../`)
+
+EXTERNAL SOURCES:
+  ASCIIfy:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ASCIIfy: fadf09360f8782283abab83d5e1e99f8ab38d29d
+
+PODFILE CHECKSUM: 4521c597f3e07b3bc44bb364eb4cd4bf3e06bb1b
+
+COCOAPODS: 1.0.0.beta.8

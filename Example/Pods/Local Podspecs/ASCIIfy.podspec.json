@@ -1,0 +1,25 @@
+{
+  "name": "ASCIIfy",
+  "version": "0.1.0",
+  "summary": "A short description of ASCIIfy.",
+  "description": "UIImage to ASCII Art",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/ASCIIfy",
+  "license": "MIT",
+  "authors": {
+    "Nick Walker": "nick@nickwalker.us"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/ASCIIfy.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "ASCIIfy": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}

@@ -6,7 +6,5 @@ target 'ASCIIfy_Example' do
 
   target 'ASCIIfy_Tests' do
     inherit! :search_paths
-
-    pod 'FBSnapshotTestCase'
   end
 end

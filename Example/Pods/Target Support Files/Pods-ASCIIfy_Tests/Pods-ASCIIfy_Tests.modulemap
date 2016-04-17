@@ -1,0 +1,6 @@
+framework module Pods_ASCIIfy_Tests {
+  umbrella header "Pods-ASCIIfy_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
