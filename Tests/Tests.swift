@@ -14,16 +14,14 @@ class Tests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+    func testBasicChecker() {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let fileLocation = bundle.pathForResource("checker-2x2", ofType: "png")!
+        let image = UIImage(contentsOfFile: fileLocation)!
+        let converter = AsciiConverter()
+        let result = converter.convertToString(image)
+
+        XCTAssertEqual(result, "@   \n  @ \n")
     }
     
 }
