@@ -29,14 +29,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pickImage: UIButton!
     @IBOutlet weak var fontSizeSlider: UISlider!
-    @IBOutlet weak var fontSizeLabel: UILabel!
+    @IBOutlet weak var fontSizeButton: UIBarButtonItem!
 
+    private var fontSizeLabel: UILabel!
     private var imagePicker: UIImagePickerController?
     private var inputImage: UIImage?
     private var outputImage: UIImage?
+    private var colorMode: ASCIIConverter.ColorMode = .Color
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        fontSizeLabel = UILabel(frame: CGRect(x: 50, y: 50, width: 25, height: 20))
+        fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
+        fontSizeButton.customView = fontSizeLabel
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -59,7 +64,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker?.dismissViewControllerAnimated(true, completion: nil)
         outputImage = inputImage?.fy_asciiImage()
         imageView.image = outputImage
-
     }
 
     @IBAction func didPressDown(sender: UIButton) {
@@ -71,8 +75,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBAction func fontSizeChanged(sender: UISlider) {
+        fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
         outputImage = inputImage?.fy_asciiImageWithFont(UIFont.systemFontOfSize(CGFloat(sender.value)))
         imageView.image = outputImage
     }
+
 }
 
