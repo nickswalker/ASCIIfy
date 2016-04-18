@@ -167,9 +167,9 @@ public extension ASCIIConverter {
         CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), imageRef)
         var grid = BlockGrid(width: width, height: height)
         var block: BlockGrid.Block
-        for var row = 0; row < height; row++ {
-            for var col = 0; col < width; col++ {
-                var byteIndex = (bytesPerRow * col) + row * bytesPerPixel
+        for row in 0..<height {
+            for col in 0..<width {
+                var byteIndex = (bytesPerRow * row) + col * bytesPerPixel
                 let r = Double(rawData[byteIndex]) / 255.0
                 let g = Double(rawData[byteIndex + 1]) / 255.0
                 let b = Double(rawData[byteIndex + 2]) / 255.0
