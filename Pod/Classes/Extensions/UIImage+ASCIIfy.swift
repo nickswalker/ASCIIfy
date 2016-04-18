@@ -1,6 +1,6 @@
 //
 //  Copyright for portions of ASCIIfy are held by Barış Koç, 2014 as part of
-//  project BKAsciiImage and Amy Dyer, 2012 as part of project ASCII. All other copyright
+//  project BKAsciiImage and Amy Dyer, 2012 as part of project Ascii. All other copyright
 //  for ASCIIfy are held by Nick Walker, 2016.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,42 +29,42 @@ public typealias ImageHandler = ((UIImage) -> Void)?
 public typealias StringHandler = ((String) -> Void)?
 
 public extension UIImage {
-    func bk_asciiImage() -> UIImage {
-        let converter = AsciiConverter()
+    func fy_asciiImage() -> UIImage {
+        let converter = ASCIIConverter()
         return converter.convertImage(self)
     }
 
-    func bk_asciiImageWithFont(font: UIFont) -> UIImage {
-        let converter = AsciiConverter()
+    func fy_asciiImageWithFont(font: UIFont) -> UIImage {
+        let converter = ASCIIConverter()
         converter.font = font
         return converter.convertImage(self)
     }
 
-    func bk_asciiString() -> String {
-        let converter = AsciiConverter()
+    func fy_asciiString() -> String {
+        let converter = ASCIIConverter()
         return converter.convertToString(self)
     }
 
-    func bk_asciiImageCompletionHandler(handler: ImageHandler) {
-        let converter = AsciiConverter()
+    func fy_asciiImageCompletionHandler(handler: ImageHandler) {
+        let converter = ASCIIConverter()
         converter.convertImage(self) { handler?($0)}
     }
 
-    func bk_asciiImageWithFont(font: UIFont, completionHandler handler: ImageHandler) {
-        let converter = AsciiConverter()
+    func fy_asciiImageWithFont(font: UIFont, completionHandler handler: ImageHandler) {
+        let converter = ASCIIConverter()
         converter.font = font
         converter.convertImage(self) { handler?($0)}
     }
 
-    func bk_asciiImage(bgColor: UIColor, grayscale: Bool) -> UIImage {
-        let converter = AsciiConverter()
+    func fy_asciiImage(bgColor: UIColor, grayscale: Bool) -> UIImage {
+        let converter = ASCIIConverter()
         converter.backgroundColor = bgColor
         converter.grayscale = grayscale
         return converter.convertImage(self)
     }
 
-    func bk_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool, completionHandler handler: ImageHandler) {
-        let converter = AsciiConverter()
+    func fy_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool, completionHandler handler: ImageHandler) {
+        let converter = ASCIIConverter()
         converter.backgroundColor = bgColor
         converter.columns = columns
         converter.reversedLuminance = reversed
@@ -72,8 +72,8 @@ public extension UIImage {
         converter.convertImage(self) { handler?($0) }
     }
 
-    func bk_asciiStringCompletionHandler(handler: StringHandler) {
-        let converter = AsciiConverter()
+    func fy_asciiStringCompletionHandler(handler: StringHandler) {
+        let converter = ASCIIConverter()
         converter.convertToString(self) { handler?($0) }
     }
 }

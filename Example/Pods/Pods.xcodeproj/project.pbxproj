@@ -10,12 +10,12 @@
 		01D1C56892BE7165215967CF83BE4A77 /* ASCIIfy-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F8B8217BBD2FCBA18BBE29530475E4 /* ASCIIfy-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0712DA754E6F568565DA0CE89476A60D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3997E5D2953ECDF377B85B234FDF550D /* Foundation.framework */; };
 		0F64D7EC4C5A4D7387FB5748F002DFCE /* Pods-ASCIIfy_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9A40BD74D2F1DFF70EC74DCC8CDC34 /* Pods-ASCIIfy_Example-dummy.m */; };
-		4EDFD10E243FF5686A4EFE1A4553FEB4 /* AsciiConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FBBBAF9B2946B925DC723FFDA267F /* AsciiConverter.swift */; };
+		4EDFD10E243FF5686A4EFE1A4553FEB4 /* ASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FBBBAF9B2946B925DC723FFDA267F /* ASCIIConverter.swift */; };
 		60BDC45BEA59BFDE39BCB773E085524F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3997E5D2953ECDF377B85B234FDF550D /* Foundation.framework */; };
-		6AA715D6B3F9807FC9147B249DF72E03 /* UIImage+BKAscii.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+BKAscii.swift */; };
+		6AA715D6B3F9807FC9147B249DF72E03 /* UIImage+ASCIIfy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+ASCIIfy.swift */; };
 		6F2B380CCC5B13871C9AE7AFF6013240 /* ASCIIfy-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6351BF0AB31A3F3F0A458057D3443F /* ASCIIfy-dummy.m */; };
-		7788218D92A2A841190A96F4DBC85A9C /* NSImage+BKAscii.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5461280234442A91A9682E5D924D457 /* NSImage+BKAscii.swift */; };
-		7DE03A712F3AFEC03F5339D66326E424 /* AsciiDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F6A1335A25D0E8444B76910B7E13B /* AsciiDefinition.swift */; };
+		7788218D92A2A841190A96F4DBC85A9C /* NSImage+ASCIIfy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5461280234442A91A9682E5D924D457 /* NSImage+ASCIIfy.swift */; };
+		7DE03A712F3AFEC03F5339D66326E424 /* ASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F6A1335A25D0E8444B76910B7E13B /* ASCIILookUpTable.swift */; };
 		81AEDDCDC307502D00B3836DD5E10ECE /* Pods-ASCIIfy_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 85800DB319888C383877D9635B5D53BE /* Pods-ASCIIfy_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5418ECB61D1356CE1089D64C6A961AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3997E5D2953ECDF377B85B234FDF550D /* Foundation.framework */; };
 		BBF92F95F7A0DC95455E05396677550C /* BlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB1F3570F4A0D2BABD18215565DDE73 /* BlockGrid.swift */; };
@@ -46,8 +46,8 @@
 		0D9A40BD74D2F1DFF70EC74DCC8CDC34 /* Pods-ASCIIfy_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ASCIIfy_Example-dummy.m"; sourceTree = "<group>"; };
 		114B5F3600ED131273265392DA45C95F /* Pods_ASCIIfy_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		141DA741D7365751289FD275CA27C0D1 /* Pods-ASCIIfy_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ASCIIfy_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		247F6A1335A25D0E8444B76910B7E13B /* AsciiDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AsciiDefinition.swift; sourceTree = "<group>"; };
-		276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+BKAscii.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+BKAscii.swift"; sourceTree = "<group>"; };
+		247F6A1335A25D0E8444B76910B7E13B /* ASCIILookUpTable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ASCIILookUpTable.swift; sourceTree = "<group>"; };
+		276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+ASCIIfy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+ASCIIfy.swift"; sourceTree = "<group>"; };
 		3997E5D2953ECDF377B85B234FDF550D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		41F8B8217BBD2FCBA18BBE29530475E4 /* ASCIIfy-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ASCIIfy-umbrella.h"; sourceTree = "<group>"; };
 		4C2225C3C98A6176B30AE52B24BB250B /* Pods-ASCIIfy_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ASCIIfy_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -63,11 +63,11 @@
 		951E7837D4EBD39B71D051071A3791E1 /* Pods-ASCIIfy_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ASCIIfy_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9D1DADF7278E58D3F3755EB58234A7E5 /* Pods_ASCIIfy_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10BE1F5A89F8B0843A7DB8942E6200E /* Pods-ASCIIfy_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ASCIIfy_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		A35FBBBAF9B2946B925DC723FFDA267F /* AsciiConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AsciiConverter.swift; sourceTree = "<group>"; };
+		A35FBBBAF9B2946B925DC723FFDA267F /* ASCIIConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ASCIIConverter.swift; sourceTree = "<group>"; };
 		ACB1F3570F4A0D2BABD18215565DDE73 /* BlockGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BlockGrid.swift; sourceTree = "<group>"; };
 		AF1678C7A3DED867A7526CF7B9C8FF88 /* ASCIIfy-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ASCIIfy-prefix.pch"; sourceTree = "<group>"; };
 		B4BC88A465FE5FC418313B49CE7EFD18 /* Pods-ASCIIfy_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ASCIIfy_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		B5461280234442A91A9682E5D924D457 /* NSImage+BKAscii.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSImage+BKAscii.swift"; sourceTree = "<group>"; };
+		B5461280234442A91A9682E5D924D457 /* NSImage+ASCIIfy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSImage+ASCIIfy.swift"; sourceTree = "<group>"; };
 		BA6351BF0AB31A3F3F0A458057D3443F /* ASCIIfy-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ASCIIfy-dummy.m"; sourceTree = "<group>"; };
 		BA859A9D5B9F3885A0FEE0A186614D12 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFEDF824CCFC9E59441949B4E6324806 /* Pods-ASCIIfy_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ASCIIfy_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -120,8 +120,8 @@
 		06328457E6D1FDBBE328B155C594F745 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A35FBBBAF9B2946B925DC723FFDA267F /* AsciiConverter.swift */,
-				247F6A1335A25D0E8444B76910B7E13B /* AsciiDefinition.swift */,
+				A35FBBBAF9B2946B925DC723FFDA267F /* ASCIIConverter.swift */,
+				247F6A1335A25D0E8444B76910B7E13B /* ASCIILookUpTable.swift */,
 				ACB1F3570F4A0D2BABD18215565DDE73 /* BlockGrid.swift */,
 				CC4358AD63FBE1E8EEC8CFB771AAAC3C /* Extensions */,
 			);
@@ -230,8 +230,8 @@
 		CC4358AD63FBE1E8EEC8CFB771AAAC3C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B5461280234442A91A9682E5D924D457 /* NSImage+BKAscii.swift */,
-				276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+BKAscii.swift */,
+				B5461280234442A91A9682E5D924D457 /* NSImage+ASCIIfy.swift */,
+				276BFAACC4049DDFE0AC2F5A39063AD8 /* UIImage+ASCIIfy.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -437,12 +437,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EDFD10E243FF5686A4EFE1A4553FEB4 /* AsciiConverter.swift in Sources */,
-				7DE03A712F3AFEC03F5339D66326E424 /* AsciiDefinition.swift in Sources */,
+				4EDFD10E243FF5686A4EFE1A4553FEB4 /* ASCIIConverter.swift in Sources */,
+				7DE03A712F3AFEC03F5339D66326E424 /* ASCIILookUpTable.swift in Sources */,
 				6F2B380CCC5B13871C9AE7AFF6013240 /* ASCIIfy-dummy.m in Sources */,
 				BBF92F95F7A0DC95455E05396677550C /* BlockGrid.swift in Sources */,
-				7788218D92A2A841190A96F4DBC85A9C /* NSImage+BKAscii.swift in Sources */,
-				6AA715D6B3F9807FC9147B249DF72E03 /* UIImage+BKAscii.swift in Sources */,
+				7788218D92A2A841190A96F4DBC85A9C /* NSImage+ASCIIfy.swift in Sources */,
+				6AA715D6B3F9807FC9147B249DF72E03 /* UIImage+ASCIIfy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

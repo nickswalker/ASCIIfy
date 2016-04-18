@@ -1,6 +1,6 @@
 //
 //  Copyright for portions of ASCIIfy are held by Barış Koç, 2014 as part of
-//  project BKAsciiImage and Amy Dyer, 2012 as part of project ASCII. All other copyright 
+//  project BKAsciiImage and Amy Dyer, 2012 as part of project Ascii. All other copyright
 //  for ASCIIfy are held by Nick Walker, 2016.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
