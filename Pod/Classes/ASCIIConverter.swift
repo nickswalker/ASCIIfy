@@ -27,13 +27,20 @@ import UIKit
 public class ASCIIConverter {
     var definition = ASCIILookUpTable()
     public var font = UIFont.systemFontOfSize(defaultFontSize)
-    public var backgroundColor: UIColor = .clearColor()
-    var columns: Int = 0
-    public var reversedLuminance: Bool = true
-    public var grayscale: Bool = false
+    public var backgroundColor = UIColor.clearColor()
+    var columns = 0
+    public var reversedLuminance = true
+    public var colorMode = ColorMode.Color
     private var gridWidth: CGFloat = 0.0
 
     static let defaultFontSize: CGFloat = 10.0
+
+    public enum ColorMode {
+        case BlackAndWhite,
+        GrayScale,
+        Color
+    }
+
     public init() {
         
     }
@@ -73,7 +80,7 @@ public extension ASCIIConverter {
     func convertImage(input: UIImage, completionHandler handler: ImageHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             var ASCIIGridWidth = self.gridWidth(input.size.width)
-            var output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: ASCIIGridWidth, reversed: self.reversedLuminance, grayscale: self.grayscale)
+            var output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: ASCIIGridWidth, reversed: self.reversedLuminance, colorMode: self.colorMode)
             dispatch_async(dispatch_get_main_queue()) { handler?(output) }
         }
     }
@@ -87,11 +94,11 @@ public extension ASCIIConverter {
 
     func convertImage(input: UIImage) -> UIImage {
         var ASCIIGridWidth = gridWidth(input.size.width)
-        var output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: ASCIIGridWidth, reversed: reversedLuminance, grayscale: grayscale)
+        var output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: ASCIIGridWidth, reversed: reversedLuminance, colorMode: colorMode)
         return output
     }
 
-    func convertImage(input: UIImage, withFont font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool) -> UIImage {
+    func convertImage(input: UIImage, withFont font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, colorMode: ColorMode) -> UIImage {
         let opaque = !isTransparent()
         let fontSize = font.pointSize
         var ASCIIGridWidth = columns
@@ -111,21 +118,21 @@ public extension ASCIIConverter {
 
         var blockWidth = input.size.width / CGFloat(pixelGrid.width)
         var blockHeight = input.size.height / CGFloat(pixelGrid.height)
-        let attributes = [NSFontAttributeName: font]
+        var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor()]
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
                 var block = pixelGrid.block(atRow: row, column: col)
                 var luminance = self.luminance(block)
                 var ASCIIResult = definition.stringForLuminance(Double(luminance))!
                 var rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
-                if !grayscale || true {
-                    let color = UIColor(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
-                     CGContextSetFillColorWithColor(ctx, color.CGColor)
-                } else {
-                    let color = UIColor(white: luminance, alpha: 1.0)
-                    CGContextSetFillColorWithColor(ctx, color.CGColor)
-                }
 
+                if colorMode == .Color {
+                    let color = UIColor(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
+                     attributes[NSForegroundColorAttributeName] = color
+                } else if colorMode == .GrayScale {
+                    let color = UIColor(white: luminance, alpha: 1.0)
+                    attributes[NSForegroundColorAttributeName] = color
+                }
                 ASCIIResult.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
             }
         }
@@ -166,7 +173,6 @@ public extension ASCIIConverter {
         var context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
         CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), imageRef)
         var grid = BlockGrid(width: width, height: height)
-        var block: BlockGrid.Block
         for row in 0..<height {
             for col in 0..<width {
                 var byteIndex = (bytesPerRow * row) + col * bytesPerPixel

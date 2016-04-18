@@ -56,19 +56,19 @@ public extension UIImage {
         converter.convertImage(self) { handler?($0)}
     }
 
-    func fy_asciiImage(bgColor: UIColor, grayscale: Bool) -> UIImage {
+    func fy_asciiImage(bgColor: UIColor, colorMode: ASCIIConverter.ColorMode) -> UIImage {
         let converter = ASCIIConverter()
         converter.backgroundColor = bgColor
-        converter.grayscale = grayscale
+        converter.colorMode = colorMode
         return converter.convertImage(self)
     }
 
-    func fy_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, grayscale: Bool, completionHandler handler: ImageHandler) {
+    func fy_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, colorMode: ASCIIConverter.ColorMode, completionHandler handler: ImageHandler) {
         let converter = ASCIIConverter()
         converter.backgroundColor = bgColor
         converter.columns = columns
         converter.reversedLuminance = reversed
-        converter.grayscale = grayscale
+        converter.colorMode = colorMode
         converter.convertImage(self) { handler?($0) }
     }
 
