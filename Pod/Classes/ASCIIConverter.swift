@@ -79,31 +79,31 @@ public extension ASCIIConverter {
 
     func convertImage(input: UIImage, completionHandler handler: ImageHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            var ASCIIGridWidth = self.gridWidth(input.size.width)
-            var output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: ASCIIGridWidth, reversed: self.reversedLuminance, colorMode: self.colorMode)
+            let gridWidth = self.gridWidth(input.size.width)
+            let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, reversed: self.reversedLuminance, colorMode: self.colorMode)
             dispatch_async(dispatch_get_main_queue()) { handler?(output) }
         }
     }
 
     func convertToString(input: UIImage, completionHandler handler: StringHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            var output = self.convertToString(input)
+            let output = self.convertToString(input)
             dispatch_async(dispatch_get_main_queue(), { handler?(output) })
         })
     }
 
     func convertImage(input: UIImage) -> UIImage {
-        var ASCIIGridWidth = gridWidth(input.size.width)
-        var output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: ASCIIGridWidth, reversed: reversedLuminance, colorMode: colorMode)
+        let gridWidth = self.gridWidth(input.size.width)
+        let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, reversed: reversedLuminance, colorMode: colorMode)
         return output
     }
 
     func convertImage(input: UIImage, withFont font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, colorMode: ColorMode) -> UIImage {
         let opaque = !isTransparent()
-        let fontSize = font.pointSize
-        var ASCIIGridWidth = columns
-        var scaledImage = downscaleImage(input, withFactor: ASCIIGridWidth)
-        var pixelGrid = pixelGridForImage(scaledImage)
+        _ = font.pointSize
+        let gridWidth = columns
+        let scaledImage = downscaleImage(input, withFactor: gridWidth)
+        let pixelGrid = pixelGridForImage(scaledImage)
         UIGraphicsBeginImageContextWithOptions(input.size, false, 0.0)
 
         // Setup background
@@ -116,15 +116,15 @@ public extension ASCIIConverter {
             CGContextClearRect(ctx, ctxRect)
         }
 
-        var blockWidth = input.size.width / CGFloat(pixelGrid.width)
-        var blockHeight = input.size.height / CGFloat(pixelGrid.height)
+        let blockWidth = input.size.width / CGFloat(pixelGrid.width)
+        let blockHeight = input.size.height / CGFloat(pixelGrid.height)
         var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor()]
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
-                var block = pixelGrid.block(atRow: row, column: col)
-                var luminance = self.luminance(block)
-                var ASCIIResult = definition.stringForLuminance(Double(luminance))!
-                var rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
+                let block = pixelGrid.block(atRow: row, column: col)
+                let luminance = self.luminance(block)
+                let ASCIIResult = definition.stringForLuminance(Double(luminance))!
+                let rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
 
                 if colorMode == .Color {
                     let color = UIColor(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
@@ -142,15 +142,15 @@ public extension ASCIIConverter {
     }
 
     func convertToString(input: UIImage) -> String {
-        var ASCIIGridWidth = gridWidth(input.size.width)
-        var scaledImage = downscaleImage(input, withFactor: ASCIIGridWidth)
-        var pixelGrid = pixelGridForImage(scaledImage)
-        var str = NSMutableString(string: "")
+        let gridWidth = self.gridWidth(input.size.width)
+        let scaledImage = downscaleImage(input, withFactor: gridWidth)
+        let pixelGrid = pixelGridForImage(scaledImage)
+        let str = NSMutableString(string: "")
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
-                var block = pixelGrid.block(atRow: row, column: col)
-                var luminance = self.luminance(block)
-                var ASCII = definition.stringForLuminance(Double(luminance))
+                let block = pixelGrid.block(atRow: row, column: col)
+                let luminance = self.luminance(block)
+                let ASCII = definition.stringForLuminance(Double(luminance))
                 str.appendString(ASCII!)
                 str.appendString(" ")
             }
@@ -160,22 +160,22 @@ public extension ASCIIConverter {
     }
 
     private func pixelGridForImage(image: UIImage) -> BlockGrid {
-        var imageRef = image.CGImage!
-        var width = CGImageGetWidth(imageRef)
-        var height = CGImageGetHeight(imageRef)
-        var colorSpace = CGColorSpaceCreateDeviceRGB()
-        var rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
-        var bytesPerPixel = 4
-        var bytesPerRow = bytesPerPixel * width
-        var bitsPerComponent = 8
+        let imageRef = image.CGImage!
+        let width = CGImageGetWidth(imageRef)
+        let height = CGImageGetHeight(imageRef)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
 
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
-        var context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+        let context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
         CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), imageRef)
-        var grid = BlockGrid(width: width, height: height)
+        let grid = BlockGrid(width: width, height: height)
         for row in 0..<height {
             for col in 0..<width {
-                var byteIndex = (bytesPerRow * row) + col * bytesPerPixel
+                let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
                 let r = Double(rawData[byteIndex]) / 255.0
                 let g = Double(rawData[byteIndex + 1]) / 255.0
                 let b = Double(rawData[byteIndex + 2]) / 255.0
@@ -195,13 +195,13 @@ public extension ASCIIConverter {
         if scaleFactor > min(image.size.height, image.size.width) {
             scaleFactor = min(image.size.height, image.size.width)
         }
-        var ratio = scaleFactor / image.size.width
-        var newWidth = scaleFactor
-        var newHeight = ratio * image.size.height
-        var size = CGSize(width: newWidth, height: newHeight)
+        let ratio = scaleFactor / image.size.width
+        let newWidth = scaleFactor
+        let newHeight = ratio * image.size.height
+        let size = CGSize(width: newWidth, height: newHeight)
         UIGraphicsBeginImageContextWithOptions(size, true, 1.0)
         image.drawInRect(CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-        var scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledImage
     }
