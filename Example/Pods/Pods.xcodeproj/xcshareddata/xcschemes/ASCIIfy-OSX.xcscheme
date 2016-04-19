@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B7409A001D9063141C819D5C4E867A58'
-               BlueprintName = 'ASCIIfy'
+               BlueprintIdentifier = '04A4674F8E026D6E44E809177FE1640A'
+               BlueprintName = 'ASCIIfy-OSX'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'ASCIIfy.framework'>
+               BuildableName = 'ASCIIfy-OSX.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

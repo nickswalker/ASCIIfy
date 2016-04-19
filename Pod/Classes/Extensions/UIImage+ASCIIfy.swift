@@ -25,9 +25,6 @@
 #if os(iOS)
 import UIKit
 
-public typealias ImageHandler = ((UIImage) -> Void)?
-public typealias StringHandler = ((String) -> Void)?
-
 public extension UIImage {
     func fy_asciiImage() -> UIImage {
         let converter = ASCIIConverter()

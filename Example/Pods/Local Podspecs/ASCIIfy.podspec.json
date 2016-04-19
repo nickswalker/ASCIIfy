@@ -1,19 +1,20 @@
 {
   "name": "ASCIIfy",
   "version": "0.1.0",
-  "summary": "A short description of ASCIIfy.",
-  "description": "UIImage to ASCII Art",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/ASCIIfy",
+  "summary": "UIImage/NSImage to ASCII art",
+  "description": "Includes UIImage and NSImage extensions. String and image output available.",
+  "homepage": "https://github.com/nickswalker/ASCIIfy",
   "license": "MIT",
   "authors": {
     "Nick Walker": "nick@nickwalker.us"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/ASCIIfy.git",
+    "git": "https://github.com/nickswalker/ASCIIfy.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "8.0",
+    "osx": "10.11"
   },
   "requires_arc": true,
   "source_files": "Pod/Classes/**/*",
@@ -21,5 +22,6 @@
     "ASCIIfy": [
       "Pod/Assets/*.png"
     ]
-  }
+  },
+  "frameworks": "UIKit"
 }

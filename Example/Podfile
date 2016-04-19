@@ -1,10 +1,23 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'ASCIIfy_Example' do
-  pod 'ASCIIfy', :path => '../'
+def import_pods
+    pod 'ASCIIfy', :path => '../'
+end
 
-  target 'ASCIIfy_Tests' do
-    inherit! :search_paths
-  end
+
+target 'ASCIIfy iOS Example' do
+    platform :ios, '8.0'
+    import_pods
+    target 'ASCIIfy iOS Tests' do
+        inherit! :search_paths
+    end
+end
+
+target 'ASCIIfy OSX Example' do
+    platform :osx, '10.11'
+    import_pods
+    target 'ASCIIfy OSX Tests' do
+        inherit! :search_paths
+    end
 end

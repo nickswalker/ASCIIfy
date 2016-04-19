@@ -1,0 +1,6 @@
+framework module ASCIIfy {
+  umbrella header "ASCIIfy-OSX-umbrella.h"
+
+  export *
+  module * { export * }
+}

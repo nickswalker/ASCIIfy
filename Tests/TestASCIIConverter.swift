@@ -21,9 +21,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-import UIKit
+
 import XCTest
 import ASCIIfy
+
+#if os(iOS)
+    import UIKit
+    typealias Image = UIImage
+#elseif os(OSX)
+    typealias Image = NSImage
+#endif
 
 class TestASCIIConverter: XCTestCase {
     var basicChecker: UIImage!
@@ -67,6 +74,7 @@ class TestASCIIConverter: XCTestCase {
         let converter = ASCIIConverter()
         measureBlock {
             let result = converter.convertImage(self.largeChecker)
+            XCTAssertEqual(result.size, CGSizeZero)
         }
 
     }
