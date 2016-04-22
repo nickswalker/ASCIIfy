@@ -25,28 +25,21 @@
 import XCTest
 import ASCIIfy
 
-#if os(iOS)
-    import UIKit
-    typealias Image = UIImage
-#elseif os(OSX)
-    typealias Image = NSImage
-#endif
-
 class TestASCIIConverter: XCTestCase {
-    var basicChecker: UIImage!
-    var largeChecker: UIImage!
+    var basicChecker: Image!
+    var largeChecker: Image!
     override func setUp() {
         super.setUp()
         let bundle = NSBundle(forClass: self.dynamicType)
 
         basicChecker = {
             let fileLocation = bundle.pathForResource("checker-2", ofType: "png")!
-            let image = UIImage(contentsOfFile: fileLocation)!
+            let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
         largeChecker = {
             let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
-            let image = UIImage(contentsOfFile: fileLocation)!
+            let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
     }

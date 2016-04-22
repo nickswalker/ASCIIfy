@@ -22,53 +22,37 @@
 //  THE SOFTWARE.
 //
 
-import Cocoa
-import ASCIIfy
-import ImageIO
-import Quartz
+import Foundation
+import AppKit
 
-class ViewController: NSViewController {
+class WindowController: NSWindowController {
+    @IBOutlet weak var toolbar: NSToolbar!
 
-    @IBOutlet weak var imageView: IKImageView!
-
-    var fontSize: CGFloat = 20.0 {
-        didSet(oldValue) {
-
-        }
+    var viewController: ViewController {
+        return self.window!.contentViewController! as! ViewController
     }
 
-    var inputImage: NSImage? {
-        didSet(oldValue) {
-            inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
-                                               columns: 200, reversed: true, colorMode: .Color){
-                asciified in
-                self.outputImage = self.toCGImage(asciified)
+    @IBAction func didChangeFontSize(sender: NSSlider) {
+        let fontSize = CGFloat(sender.floatValue)
+        viewController.fontSize = fontSize
+    }
 
+    @IBAction func didChangeColorMode(sender: NSSegmentedControl) {
+        
+    }
+
+    @IBAction func openImage(sender: NSMenuItem) {
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.message = "Select an image"
+        openPanel.beginSheetModalForWindow(window!) { result in
+            if result == NSFileHandlingPanelOKButton {
+                let url = openPanel.URLs[0]
+
+                self.viewController.inputImage = NSImage(contentsOfURL: url)
             }
         }
     }
-
-    private var outputImage: CGImage? {
-        didSet(oldValue) {
-            self.imageView.setImage(outputImage, imageProperties: [:])
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("flower", ofType: "jpg")!
-        inputImage = NSImage(contentsOfFile: path)!
-    }
-
-    private func toCGImage(image: NSImage) -> CGImage {
-        var rect = NSRect(origin: CGPointZero, size: image.size)
-        return image.CGImageForProposedRect(&rect, context: nil, hints: nil)!
-    }
-
-}
-
-
-extension ViewController {
-
 }

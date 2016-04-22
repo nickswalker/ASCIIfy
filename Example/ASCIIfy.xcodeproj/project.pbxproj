@@ -29,6 +29,8 @@
 		D43B351A1CC456A100134D3B /* checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B35191CC456A100134D3B /* checker-2.png */; };
 		D43B351E1CC4685000134D3B /* TestASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */; };
 		D43B35201CC47A0C00134D3B /* checker-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B351F1CC47A0C00134D3B /* checker-1024.png */; };
+		D46F96DB1CC9B03200355315 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46F96DA1CC9B03200355315 /* WindowController.swift */; };
+		D4F45DDB1CC952E70099662B /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4F45DD91CC950800099662B /* flower.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		D43B35191CC456A100134D3B /* checker-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checker-2.png"; sourceTree = "<group>"; };
 		D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestASCIILookUpTable.swift; sourceTree = "<group>"; };
 		D43B351F1CC47A0C00134D3B /* checker-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checker-1024.png"; sourceTree = "<group>"; };
+		D46F96DA1CC9B03200355315 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		D4F45DD91CC950800099662B /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
 		DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E09906992862661C474E03E1 /* Pods-ASCIIfy OSX Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIfy OSX Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASCIIfy OSX Example/Pods-ASCIIfy OSX Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E0A90DBA141EF2E072E360BB /* Pods-ASCIIfy OSX Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIfy OSX Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASCIIfy OSX Tests/Pods-ASCIIfy OSX Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,8 +160,8 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ASCIIfy */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				D43A8CF21CC6CFD600CB94D2 /* Example for ASCIIfy (Mac) */,
+				607FACE81AFB9204008FA782 /* Tests */,
 				D43A8D071CC6D12600CB94D2 /* ASCIIfy_Mac_Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				33D879706936E9DFB61674D9 /* Pods */,
@@ -247,6 +251,7 @@
 			children = (
 				D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */,
 				D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */,
+				D46F96DA1CC9B03200355315 /* WindowController.swift */,
 				D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */,
 				D43A8CF91CC6CFD600CB94D2 /* Main.storyboard */,
 				D43A8CFC1CC6CFD600CB94D2 /* Info.plist */,
@@ -267,6 +272,7 @@
 		D43B35161CC4545800134D3B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4F45DD91CC950800099662B /* flower.jpg */,
 				D43B351F1CC47A0C00134D3B /* checker-1024.png */,
 				D43B35191CC456A100134D3B /* checker-2.png */,
 			);
@@ -431,6 +437,7 @@
 			files = (
 				D43A8CF81CC6CFD600CB94D2 /* Assets.xcassets in Resources */,
 				D43A8CFB1CC6CFD600CB94D2 /* Main.storyboard in Resources */,
+				D4F45DDB1CC952E70099662B /* flower.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +657,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43A8CF61CC6CFD600CB94D2 /* ViewController.swift in Sources */,
+				D46F96DB1CC9B03200355315 /* WindowController.swift in Sources */,
 				D43A8CF41CC6CFD600CB94D2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
