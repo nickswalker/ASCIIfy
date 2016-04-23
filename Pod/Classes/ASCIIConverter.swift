@@ -41,10 +41,16 @@ public class ASCIIConverter {
     var definition = ASCIILookUpTable()
     public var font = Font.systemFontOfSize(defaultFontSize)
     public var backgroundColor = Color.clearColor()
-    var columns = 0
+    var columns: Int?
     public var reversedLuminance = true
     public var colorMode = ColorMode.Color
-    private var gridWidth: CGFloat = 0.0
+    private func gridWidth(width: Int) -> Int {
+        if columns ?? 0 <= 0 {
+            return Int(CGFloat(width) / font.pointSize)
+        } else {
+            return Int(columns!)
+        }
+    }
 
     static let defaultFontSize: CGFloat = 10.0
 
@@ -69,14 +75,6 @@ public class ASCIIConverter {
         return backgroundColor == Color.clearColor()
     }
 
-    private func gridWidth(width: CGFloat) -> Int {
-        if self.columns == 0 {
-            return Int(width / font.pointSize)
-        } else {
-            return columns
-        }
-    }
-
     private func luminance(block: BlockGrid.Block) -> CGFloat {
         var result = 0.2126 * block.r + 0.7152 * block.g + 0.0722 * block.b
         if reversedLuminance {
@@ -87,12 +85,11 @@ public class ASCIIConverter {
 }
 
 
-
 public extension ASCIIConverter {
 
     func convertImage(input: Image, completionHandler handler: ImageHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let gridWidth = self.gridWidth(input.size.width)
+            let gridWidth = self.gridWidth(Int(input.size.width))
             let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, reversed: self.reversedLuminance, colorMode: self.colorMode)
             dispatch_async(dispatch_get_main_queue()) { handler?(output) }
         }
@@ -106,22 +103,28 @@ public extension ASCIIConverter {
     }
 
     func convertImage(input: Image) -> Image {
-        let gridWidth = self.gridWidth(input.size.width)
+        let gridWidth = self.gridWidth(Int(input.size.width))
         let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, reversed: reversedLuminance, colorMode: colorMode)
         return output
     }
 
-    func convertImage(input: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool, colorMode: ColorMode) -> Image {
+    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int?, reversed: Bool, colorMode: ColorMode) -> Image {
+        if colorMode == .BlackAndWhite {
+            return convertImageBlackAndWhite(image, withFont: font, bgColor: bgColor, columns: columns, reversed: reversed)
+        }
         let opaque = !isTransparent()
-        _ = font.pointSize
-        let gridWidth = columns
-        let scaledImage = downscaleImage(input, withFactor: gridWidth)
-        let pixelGrid = pixelGridForImage(scaledImage)
-        UIGraphicsBeginImageContextWithOptions(input.size, false, 0.0)
+        let downscaled = downscaleImage(image, withFactor: gridWidth(Int(image.size.width)))
+        let pixelGrid = pixelGridForImage(downscaled)
 
+        let ctx: CGContext
+        #if os(iOS)
+        UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
+            ctx = UIGraphicsGetCurrentContext()!
+        #elseif os(OSX)
+            ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
+        #endif
         // Setup background
-        let ctx = UIGraphicsGetCurrentContext()
-        let ctxRect = CGRect(x: 0, y: 0, width: input.size.width, height: input.size.height)
+        let ctxRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         if opaque {
             CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
             CGContextFillRect(ctx, ctxRect)
@@ -129,8 +132,8 @@ public extension ASCIIConverter {
             CGContextClearRect(ctx, ctxRect)
         }
 
-        let blockWidth = input.size.width / CGFloat(pixelGrid.width)
-        let blockHeight = input.size.height / CGFloat(pixelGrid.height)
+        let blockWidth = image.size.width / CGFloat(pixelGrid.width)
+        let blockHeight = image.size.height / CGFloat(pixelGrid.height)
         var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
@@ -149,13 +152,50 @@ public extension ASCIIConverter {
                 ASCIIResult.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
             }
         }
-        let renderedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return renderedImage
+
+        #if os(iOS)
+            let cgImage = UIGraphicsBitmapFromImageContext()
+            UIGraphicsEndImageContext()
+        #else if os(OSX)
+            let cgImage = CGBitmapContextCreateImage(ctx)!
+        #endif
+        return cgImage.toImage()
+    }
+
+    func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int?, reversed: Bool) -> Image {
+        let opaque = !isTransparent()
+        let string = convertToString(image)
+
+        let ctx: CGContext
+        #if os(iOS)
+            UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
+            ctx = UIGraphicsGetCurrentContext()!
+        #elseif os(OSX)
+            ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
+        #endif
+        // Setup background
+        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        if opaque {
+            CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
+            CGContextFillRect(ctx, rect)
+        } else {
+            CGContextClearRect(ctx, rect)
+        }
+
+        let attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
+
+        string.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
+
+        let cgImage = CGBitmapContextCreateImage(ctx)!
+
+        #if os(iOS)
+            UIGraphicsEndImageContext()
+        #endif
+        return cgImage.toImage()
     }
 
     func convertToString(input: Image) -> String {
-        let gridWidth = self.gridWidth(input.size.width)
+        let gridWidth = self.gridWidth(Int(input.size.width))
         let scaledImage = downscaleImage(input, withFactor: gridWidth)
         let pixelGrid = pixelGridForImage(scaledImage)
         let str = NSMutableString(string: "")
@@ -172,10 +212,16 @@ public extension ASCIIConverter {
         return String(str)
     }
 
-    private func pixelGridForImage(image: Image) -> BlockGrid {
-        let imageRef = image.CGImage!
-        let width = CGImageGetWidth(imageRef)
-        let height = CGImageGetHeight(imageRef)
+    /**
+     Converts an image into pixel addressable format
+
+     - parameter image: image to convert
+
+     - returns: grid of pixels
+     */
+    private func pixelGridForImage(image: CGImage) -> BlockGrid {
+        let width = CGImageGetWidth(image)
+        let height = CGImageGetHeight(image)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
         let bytesPerPixel = 4
@@ -184,7 +230,7 @@ public extension ASCIIConverter {
 
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
         let context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
-        CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), imageRef)
+        CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), image)
         let grid = BlockGrid(width: width, height: height)
         for row in 0..<height {
             for col in 0..<width {
@@ -198,24 +244,5 @@ public extension ASCIIConverter {
         }
         free(rawData)
         return grid
-    }
-
-    private func downscaleImage(image: Image, withFactor scaleFactor: Int) -> Image {
-        var scaleFactor = CGFloat(scaleFactor)
-        if scaleFactor <= 1 {
-            return image
-        }
-        if scaleFactor > min(image.size.height, image.size.width) {
-            scaleFactor = min(image.size.height, image.size.width)
-        }
-        let ratio = scaleFactor / image.size.width
-        let newWidth = scaleFactor
-        let newHeight = ratio * image.size.height
-        let size = CGSize(width: newWidth, height: newHeight)
-        UIGraphicsBeginImageContextWithOptions(size, true, 1.0)
-        image.drawInRect(CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return scaledImage
     }
 }

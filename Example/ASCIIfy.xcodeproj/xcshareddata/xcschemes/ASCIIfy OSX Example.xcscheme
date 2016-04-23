@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "ASCIIfy iOS Example.app"
-               BlueprintName = "ASCIIfy iOS Example"
-               ReferencedContainer = "container:ASCIIfy.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "ASCIIfy iOS Tests.xctest"
-               BlueprintName = "ASCIIfy iOS Tests"
+               BlueprintIdentifier = "D43A8CF01CC6CFD500CB94D2"
+               BuildableName = "ASCIIfy_OSX_Example.app"
+               BlueprintName = "ASCIIfy_OSX_Example"
                ReferencedContainer = "container:ASCIIfy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "ASCIIfy iOS Tests.xctest"
-               BlueprintName = "ASCIIfy iOS Tests"
+               BlueprintIdentifier = "D43A8D051CC6D12600CB94D2"
+               BuildableName = "ASCIIfy_OSX_Tests.xctest"
+               BlueprintName = "ASCIIfy_OSX_Tests"
                ReferencedContainer = "container:ASCIIfy.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "ASCIIfy iOS Example.app"
-            BlueprintName = "ASCIIfy iOS Example"
+            BlueprintIdentifier = "D43A8CF01CC6CFD500CB94D2"
+            BuildableName = "ASCIIfy_OSX_Example.app"
+            BlueprintName = "ASCIIfy_OSX_Example"
             ReferencedContainer = "container:ASCIIfy.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -79,9 +65,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "ASCIIfy iOS Example.app"
-            BlueprintName = "ASCIIfy iOS Example"
+            BlueprintIdentifier = "D43A8CF01CC6CFD500CB94D2"
+            BuildableName = "ASCIIfy_OSX_Example.app"
+            BlueprintName = "ASCIIfy_OSX_Example"
             ReferencedContainer = "container:ASCIIfy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -98,9 +84,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "ASCIIfy iOS Example.app"
-            BlueprintName = "ASCIIfy iOS Example"
+            BlueprintIdentifier = "D43A8CF01CC6CFD500CB94D2"
+            BuildableName = "ASCIIfy_OSX_Example.app"
+            BlueprintName = "ASCIIfy_OSX_Example"
             ReferencedContainer = "container:ASCIIfy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

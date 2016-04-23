@@ -1,5 +1,5 @@
 framework module Pods_ASCIIfy_OSX_Tests {
-  umbrella header "Pods-ASCIIfy OSX Tests-umbrella.h"
+  umbrella header "Pods-ASCIIfy_OSX_Tests-umbrella.h"
 
   export *
   module * { export * }

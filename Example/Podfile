@@ -6,18 +6,18 @@ def import_pods
 end
 
 
-target 'ASCIIfy iOS Example' do
+target 'ASCIIfy_iOS_Example' do
     platform :ios, '8.0'
     import_pods
-    target 'ASCIIfy iOS Tests' do
+    target 'ASCIIfy_iOS_Tests' do
         inherit! :search_paths
     end
 end
 
-target 'ASCIIfy OSX Example' do
+target 'ASCIIfy_OSX_Example' do
     platform :osx, '10.11'
     import_pods
-    target 'ASCIIfy OSX Tests' do
+    target 'ASCIIfy_OSX_Tests' do
         inherit! :search_paths
     end
 end

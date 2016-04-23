@@ -28,6 +28,7 @@ import ASCIIfy
 class TestASCIIConverter: XCTestCase {
     var basicChecker: Image!
     var largeChecker: Image!
+    var asymmetricChecker: Image!
     override func setUp() {
         super.setUp()
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -42,6 +43,11 @@ class TestASCIIConverter: XCTestCase {
             let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
+        asymmetricChecker = {
+            let fileLocation = bundle.pathForResource("asymmetric-checker-2", ofType: "png")!
+            let image = Image(contentsOfFile: fileLocation)!
+            return image
+            }()
     }
     
     override func tearDown() {
@@ -63,11 +69,18 @@ class TestASCIIConverter: XCTestCase {
         XCTAssertEqual(result, "  @ \n@   \n")
     }
 
+    func testThatImageOrientationIsNotChanged() {
+        let converter = ASCIIConverter()
+        converter.reversedLuminance = false
+        let result = converter.convertToString(asymmetricChecker)
+        XCTAssertEqual(result, "  @ \n<   \n")
+    }
+
     func testStringConversionPerformance() {
         let converter = ASCIIConverter()
         measureBlock {
             let result = converter.convertImage(self.largeChecker)
-            XCTAssertEqual(result.size, CGSizeZero)
+            XCTAssertEqual(result.size, self.largeChecker.size)
         }
 
     }
