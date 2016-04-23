@@ -33,18 +33,19 @@ class ViewController: NSViewController {
 
     var fontSize: CGFloat = 20.0 {
         didSet(oldValue) {
-
+            processInput()
         }
     }
 
     var inputImage: NSImage? {
         didSet(oldValue) {
-            inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
-                                               columns: 200, reversed: true, colorMode: .Color){
-                asciified in
-                self.outputImage = self.toCGImage(asciified)
+            processInput()
+        }
+    }
 
-            }
+    var colorMode: ASCIIConverter.ColorMode = .BlackAndWhite {
+        didSet(oldValue) {
+            processInput()
         }
     }
 
@@ -59,6 +60,15 @@ class ViewController: NSViewController {
         let bundle = NSBundle(forClass: self.dynamicType)
         let path = bundle.pathForResource("flower", ofType: "jpg")!
         inputImage = NSImage(contentsOfFile: path)!
+    }
+
+    private func processInput() {
+        inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
+                                          columns: 0, reversed: true, colorMode: colorMode){
+            asciified in
+            self.outputImage = self.toCGImage(asciified)
+                                            
+        }
     }
 
     private func toCGImage(image: NSImage) -> CGImage {
