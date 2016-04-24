@@ -20,15 +20,15 @@ internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGIma
     #if os(iOS)
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         ctx = UIGraphicsGetCurrentContext()!
+        image.drawInRect(rect)
+        return UIGraphicsGetImageFromCurrentImageContext().CGImage!
     #elseif os(OSX)
         ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
+        let cgImage = image.toCGImage
+        CGContextDrawImage(ctx, rect, cgImage)
+        let result = CGBitmapContextCreateImage(ctx)!
+        return result
     #endif
-
-    let cgImage = image.toCGImage
-    CGContextDrawImage(ctx, rect, cgImage)
-    let result = CGBitmapContextCreateImage(ctx)!
-
-    return result
 }
 
 internal extension CGImage {

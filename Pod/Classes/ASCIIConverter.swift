@@ -154,12 +154,13 @@ public extension ASCIIConverter {
         }
 
         #if os(iOS)
-            let cgImage = UIGraphicsBitmapFromImageContext()
+            let result = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-        #else if os(OSX)
+            return result
+        #elseif os(OSX)
             let cgImage = CGBitmapContextCreateImage(ctx)!
+            return cgImage.toImage()
         #endif
-        return cgImage.toImage()
     }
 
     func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int?, reversed: Bool) -> Image {
