@@ -76,6 +76,11 @@ class TestASCIIConverter: XCTestCase {
         XCTAssertEqual(result, "  @ \n<   \n")
     }
 
+    func testThatImageSizeIsCorrect() {
+        let result = largeChecker.fy_asciiImage()
+        XCTAssertEqual(result.size, largeChecker.size)
+    }
+
     func testStringConversionPerformance() {
         let converter = ASCIIConverter()
         measureBlock {
