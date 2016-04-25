@@ -16,6 +16,8 @@
 		607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */; };
 		6F20B6DC0DD803BAEE94946A /* Pods_ASCIIfy_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C22509D98D182AAA8C74D1C /* Pods_ASCIIfy_iOS_Tests.framework */; };
 		84AB2E0A690CFF310739F78C /* Pods_ASCIIfy_OSX_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E764F20BB5C72F8E6E1EAEE /* Pods_ASCIIfy_OSX_Example.framework */; };
+		D42C7B461CCDF049005BFE86 /* TestImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */; };
+		D42C7B471CCDF04A005BFE86 /* TestImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */; };
 		D43A8CF41CC6CFD600CB94D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */; };
 		D43A8CF61CC6CFD600CB94D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */; };
 		D43A8CF81CC6CFD600CB94D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */; };
@@ -74,6 +76,7 @@
 		A822A697CDA29AD5C5D31D4C /* Pods-ASCIIfy_OSX_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIfy_OSX_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASCIIfy_OSX_Example/Pods-ASCIIfy_OSX_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AE47ABFC3C7BF8BB8BC6EA42 /* Pods-ASCIIfy_OSX_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIfy_OSX_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASCIIfy_OSX_Tests/Pods-ASCIIfy_OSX_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C9A0C0DC52D873C0F1E97B8D /* Pods_ASCIIfy_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestImageUtilities.swift; sourceTree = "<group>"; };
 		D43A8CF11CC6CFD500CB94D2 /* ASCIIfy_OSX_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIfy_OSX_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -193,10 +196,11 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */,
 				D43B35161CC4545800134D3B /* Resources */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */,
 				D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */,
+				D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */,
 			);
 			name = Tests;
 			path = ../Tests;
@@ -628,6 +632,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43B351E1CC4685000134D3B /* TestASCIILookUpTable.swift in Sources */,
+				D42C7B461CCDF049005BFE86 /* TestImageUtilities.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,6 +652,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43A8D101CC6D17500CB94D2 /* TestASCIIConverter.swift in Sources */,
+				D42C7B471CCDF04A005BFE86 /* TestImageUtilities.swift in Sources */,
 				D43A8D121CC6D17B00CB94D2 /* TestASCIILookUpTable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -49,6 +49,39 @@ class BlockGrid {
         grid = [[Block]](count: height, repeatedValue: [Block](count: width, repeatedValue: Block(r: 0.0, g: 0.0, b: 0.0, a: 0.0)))
     }
 
+    /**
+     Converts an image into pixel addressable format
+
+     - parameter image: image to convert
+
+     - returns: grid of pixels
+     */
+    convenience init(image: CGImage) {
+        let width = CGImageGetWidth(image)
+        let height = CGImageGetHeight(image)
+        self.init(width: width, height: height)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
+        let context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+        CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), image)
+        for row in 0..<height {
+            for col in 0..<width {
+                let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
+                let r = Double(rawData[byteIndex]) / 255.0
+                let g = Double(rawData[byteIndex + 1]) / 255.0
+                let b = Double(rawData[byteIndex + 2]) / 255.0
+                let a = Double(rawData[byteIndex + 3]) / 255.0
+                copy(BlockGrid.Block(r: r, g: g, b: b, a: a), toRow: row, column: col)
+            }
+        }
+        free(rawData)
+    }
+
     func copy(block: Block, toRow row: Int, column: Int){
         grid[row][column] = block
     }

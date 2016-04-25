@@ -18,7 +18,7 @@ internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGIma
     let rect = CGRect(origin: CGPointZero, size: size)
     let ctx: CGContext
     #if os(iOS)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
         ctx = UIGraphicsGetCurrentContext()!
         image.drawInRect(rect)
         return UIGraphicsGetImageFromCurrentImageContext().CGImage!

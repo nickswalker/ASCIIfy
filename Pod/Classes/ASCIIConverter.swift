@@ -108,13 +108,13 @@ public extension ASCIIConverter {
         return output
     }
 
-    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int?, reversed: Bool, colorMode: ColorMode) -> Image {
+    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool, colorMode: ColorMode) -> Image {
         if colorMode == .BlackAndWhite {
             return convertImageBlackAndWhite(image, withFont: font, bgColor: bgColor, columns: columns, reversed: reversed)
         }
         let opaque = !isTransparent()
-        let downscaled = downscaleImage(image, withFactor: gridWidth(Int(image.size.width)))
-        let pixelGrid = pixelGridForImage(downscaled)
+        let downscaled = downscaleImage(image, withFactor: columns)
+        let pixelGrid = BlockGrid(image: downscaled)
 
         let ctx: CGContext
         #if os(iOS)
@@ -163,7 +163,7 @@ public extension ASCIIConverter {
         #endif
     }
 
-    func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int?, reversed: Bool) -> Image {
+    func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool) -> Image {
         let opaque = !isTransparent()
         let string = convertToString(image)
 
@@ -198,7 +198,7 @@ public extension ASCIIConverter {
     func convertToString(input: Image) -> String {
         let gridWidth = self.gridWidth(Int(input.size.width))
         let scaledImage = downscaleImage(input, withFactor: gridWidth)
-        let pixelGrid = pixelGridForImage(scaledImage)
+        let pixelGrid = BlockGrid(image: scaledImage)
         let str = NSMutableString(string: "")
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
@@ -211,39 +211,5 @@ public extension ASCIIConverter {
             str.appendString("\n")
         }
         return String(str)
-    }
-
-    /**
-     Converts an image into pixel addressable format
-
-     - parameter image: image to convert
-
-     - returns: grid of pixels
-     */
-    private func pixelGridForImage(image: CGImage) -> BlockGrid {
-        let width = CGImageGetWidth(image)
-        let height = CGImageGetHeight(image)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
-        let bytesPerPixel = 4
-        let bytesPerRow = bytesPerPixel * width
-        let bitsPerComponent = 8
-
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
-        let context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
-        CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), image)
-        let grid = BlockGrid(width: width, height: height)
-        for row in 0..<height {
-            for col in 0..<width {
-                let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
-                let r = Double(rawData[byteIndex]) / 255.0
-                let g = Double(rawData[byteIndex + 1]) / 255.0
-                let b = Double(rawData[byteIndex + 2]) / 255.0
-                let a = Double(rawData[byteIndex + 3]) / 255.0
-                grid.copy(BlockGrid.Block(r: r, g: g, b: b, a: a), toRow: row, column: col)
-            }
-        }
-        free(rawData)
-        return grid
     }
 }
