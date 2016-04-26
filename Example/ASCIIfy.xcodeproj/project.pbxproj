@@ -10,9 +10,7 @@
 		30933761C4D74509D5F70044 /* Pods_ASCIIfy_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE310AB93771CA819EEE20D /* Pods_ASCIIfy_iOS_Example.framework */; };
 		5350E5EA7075F4FC7485445B /* Pods_ASCIIfy_OSX_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
-		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */; };
 		6F20B6DC0DD803BAEE94946A /* Pods_ASCIIfy_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C22509D98D182AAA8C74D1C /* Pods_ASCIIfy_iOS_Tests.framework */; };
 		84AB2E0A690CFF310739F78C /* Pods_ASCIIfy_OSX_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E764F20BB5C72F8E6E1EAEE /* Pods_ASCIIfy_OSX_Example.framework */; };
@@ -21,7 +19,6 @@
 		D43A8CF41CC6CFD600CB94D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */; };
 		D43A8CF61CC6CFD600CB94D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */; };
 		D43A8CF81CC6CFD600CB94D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */; };
-		D43A8CFB1CC6CFD600CB94D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D43A8CF91CC6CFD600CB94D2 /* Main.storyboard */; };
 		D43A8D101CC6D17500CB94D2 /* TestASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */; };
 		D43A8D121CC6D17B00CB94D2 /* TestASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */; };
 		D43B35151CC453E900134D3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B35141CC453E900134D3B /* AppDelegate.swift */; };
@@ -31,6 +28,9 @@
 		D46F96DB1CC9B03200355315 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46F96DA1CC9B03200355315 /* WindowController.swift */; };
 		D4B99BD21CCDE4220027B78F /* asymmetric-checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */; };
 		D4B99BD31CCDE4220027B78F /* asymmetric-checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */; };
+		D4C1B3FF1CCFE42500975AE1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */; };
+		D4C1B4001CCFE42500975AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */; };
+		D4C1B4021CCFE44600975AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B4011CCFE44600975AE1 /* Main.storyboard */; };
 		D4F45DDB1CC952E70099662B /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4F45DD91CC950800099662B /* flower.jpg */; };
 /* End PBXBuildFile section */
 
@@ -62,11 +62,9 @@
 		5BBF51AE10A2FDA476AE1C92 /* ASCIIfy.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ASCIIfy.podspec; path = ../ASCIIfy.podspec; sourceTree = "<group>"; };
 		5FE310AB93771CA819EEE20D /* Pods_ASCIIfy_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ASCIIfy_iOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIfy_iOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = iOS/Resources/Info.plist; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Source/ViewController.swift; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Resources/Images.xcassets; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ASCIIfy_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASCIIfy_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestASCIIConverter.swift; sourceTree = "<group>"; };
@@ -78,18 +76,20 @@
 		C9A0C0DC52D873C0F1E97B8D /* Pods_ASCIIfy_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestImageUtilities.swift; sourceTree = "<group>"; };
 		D43A8CF11CC6CFD500CB94D2 /* ASCIIfy_OSX_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIfy_OSX_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D43A8CFA1CC6CFD600CB94D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D43A8CFC1CC6CFD600CB94D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Source/AppDelegate.swift; sourceTree = "<group>"; };
+		D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Source/ViewController.swift; sourceTree = "<group>"; };
+		D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		D43A8CFC1CC6CFD600CB94D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		D43A8D061CC6D12600CB94D2 /* ASCIIfy_OSX_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASCIIfy_OSX_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D43B35141CC453E900134D3B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D43B35141CC453E900134D3B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Source/AppDelegate.swift; sourceTree = "<group>"; };
 		D43B35191CC456A100134D3B /* checker-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checker-2.png"; sourceTree = "<group>"; };
 		D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestASCIILookUpTable.swift; sourceTree = "<group>"; };
 		D43B351F1CC47A0C00134D3B /* checker-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checker-1024.png"; sourceTree = "<group>"; };
-		D46F96DA1CC9B03200355315 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		D46F96DA1CC9B03200355315 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowController.swift; path = Source/WindowController.swift; sourceTree = "<group>"; };
 		D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "asymmetric-checker-2.png"; sourceTree = "<group>"; };
+		D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = iOS/Resources/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
+		D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/Resources/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		D4C1B4011CCFE44600975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Resources/Main.storyboard; sourceTree = "<group>"; };
 		D4F45DD91CC950800099662B /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
 		DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F319F58F0B54F496924C54BB /* Pods_ASCIIfy_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,17 +175,17 @@
 			children = (
 				D43B35141CC453E900134D3B /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for ASCIIfy";
-			path = Source;
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */,
+				D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
@@ -243,12 +243,10 @@
 				D43A8CF31CC6CFD600CB94D2 /* AppDelegate.swift */,
 				D43A8CF51CC6CFD600CB94D2 /* ViewController.swift */,
 				D46F96DA1CC9B03200355315 /* WindowController.swift */,
-				D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */,
-				D43A8CF91CC6CFD600CB94D2 /* Main.storyboard */,
-				D43A8CFC1CC6CFD600CB94D2 /* Info.plist */,
+				D496ADE21CCFE04000F0DC11 /* Supporting Files */,
 			);
 			name = "Example for ASCIIfy (Mac)";
-			path = ASCIIfy_Example_Mac;
+			path = Mac;
 			sourceTree = "<group>";
 		};
 		D43B35161CC4545800134D3B /* Resources */ = {
@@ -260,6 +258,16 @@
 				D43B35191CC456A100134D3B /* checker-2.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		D496ADE21CCFE04000F0DC11 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4C1B4011CCFE44600975AE1 /* Main.storyboard */,
+				D43A8CF71CC6CFD600CB94D2 /* Assets.xcassets */,
+				D43A8CFC1CC6CFD600CB94D2 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,8 +406,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				D4C1B4001CCFE42500975AE1 /* Main.storyboard in Resources */,
+				D4C1B3FF1CCFE42500975AE1 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,8 +426,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C1B4021CCFE44600975AE1 /* Main.storyboard in Resources */,
 				D43A8CF81CC6CFD600CB94D2 /* Assets.xcassets in Resources */,
-				D43A8CFB1CC6CFD600CB94D2 /* Main.storyboard in Resources */,
 				D4F45DDB1CC952E70099662B /* flower.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,34 +680,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			path = ../Resources;
-			sourceTree = "<group>";
-		};
-		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDF1AFB9204008FA782 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		D43A8CF91CC6CFD600CB94D2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D43A8CFA1CC6CFD600CB94D2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -788,7 +768,7 @@
 			baseConfigurationReference = 15AD0517E1088ED95A050C03 /* Pods-ASCIIfy_iOS_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -801,7 +781,7 @@
 			baseConfigurationReference = 2EB39B14887562EEFFE69C60 /* Pods-ASCIIfy_iOS_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -854,7 +834,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = ASCIIfy_Example_Mac/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Mac/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.ASCIIfy-Example-Mac";
@@ -871,7 +851,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = ASCIIfy_Example_Mac/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Mac/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.ASCIIfy-Example-Mac";
