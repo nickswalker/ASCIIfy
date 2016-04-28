@@ -21,5 +21,4 @@ Includes UIImage and NSImage extensions. String and image output available.
   s.resource_bundles = {
     'ASCIIfy' => ['Pod/Assets/*.png']
   }
-  s.frameworks = 'UIKit'
 end
