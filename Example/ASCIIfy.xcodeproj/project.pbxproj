@@ -10,7 +10,6 @@
 		30933761C4D74509D5F70044 /* Pods_ASCIIfy_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE310AB93771CA819EEE20D /* Pods_ASCIIfy_iOS_Example.framework */; };
 		5350E5EA7075F4FC7485445B /* Pods_ASCIIfy_OSX_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */; };
 		6F20B6DC0DD803BAEE94946A /* Pods_ASCIIfy_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C22509D98D182AAA8C74D1C /* Pods_ASCIIfy_iOS_Tests.framework */; };
 		84AB2E0A690CFF310739F78C /* Pods_ASCIIfy_OSX_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E764F20BB5C72F8E6E1EAEE /* Pods_ASCIIfy_OSX_Example.framework */; };
@@ -31,6 +30,11 @@
 		D4C1B3FF1CCFE42500975AE1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */; };
 		D4C1B4001CCFE42500975AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */; };
 		D4C1B4021CCFE44600975AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B4011CCFE44600975AE1 /* Main.storyboard */; };
+		D4C1B4041CCFEC1000975AE1 /* TestBlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C1B4031CCFEC1000975AE1 /* TestBlockGrid.swift */; };
+		D4C1B4051CCFEC1000975AE1 /* TestBlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C1B4031CCFEC1000975AE1 /* TestBlockGrid.swift */; };
+		D4C1B4071CCFEF2A00975AE1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B4061CCFEF2A00975AE1 /* Images.xcassets */; };
+		D4C1B4081CCFEF7F00975AE1 /* checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B35191CC456A100134D3B /* checker-2.png */; };
+		D4C1B4091CCFEF8800975AE1 /* checker-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B351F1CC47A0C00134D3B /* checker-1024.png */; };
 		D4F45DDB1CC952E70099662B /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4F45DD91CC950800099662B /* flower.jpg */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +68,6 @@
 		607FACD01AFB9204008FA782 /* ASCIIfy_iOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIfy_iOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = iOS/Resources/Info.plist; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Source/ViewController.swift; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Resources/Images.xcassets; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ASCIIfy_iOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASCIIfy_iOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestASCIIConverter.swift; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 		D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = iOS/Resources/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/Resources/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		D4C1B4011CCFE44600975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Resources/Main.storyboard; sourceTree = "<group>"; };
+		D4C1B4031CCFEC1000975AE1 /* TestBlockGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestBlockGrid.swift; sourceTree = "<group>"; };
+		D4C1B4061CCFEF2A00975AE1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		D4F45DD91CC950800099662B /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
 		DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F319F58F0B54F496924C54BB /* Pods_ASCIIfy_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,7 +191,7 @@
 			children = (
 				D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */,
 				D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				D4C1B4061CCFEF2A00975AE1 /* Images.xcassets */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -201,6 +206,7 @@
 				607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */,
 				D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */,
 				D42C7B431CCDF003005BFE86 /* TestImageUtilities.swift */,
+				D4C1B4031CCFEC1000975AE1 /* TestBlockGrid.swift */,
 			);
 			name = Tests;
 			path = ../Tests;
@@ -377,6 +383,7 @@
 					};
 					D43A8D051CC6D12600CB94D2 = {
 						CreatedOnToolsVersion = 7.3;
+						TestTargetID = D43A8CF01CC6CFD500CB94D2;
 					};
 				};
 			};
@@ -406,9 +413,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C1B4071CCFEF2A00975AE1 /* Images.xcassets in Resources */,
 				D4C1B4001CCFE42500975AE1 /* Main.storyboard in Resources */,
 				D4C1B3FF1CCFE42500975AE1 /* LaunchScreen.xib in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +443,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C1B4091CCFEF8800975AE1 /* checker-1024.png in Resources */,
+				D4C1B4081CCFEF7F00975AE1 /* checker-2.png in Resources */,
 				D4B99BD31CCDE4220027B78F /* asymmetric-checker-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +651,7 @@
 				D43B351E1CC4685000134D3B /* TestASCIILookUpTable.swift in Sources */,
 				D42C7B461CCDF049005BFE86 /* TestImageUtilities.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */,
+				D4C1B4041CCFEC1000975AE1 /* TestBlockGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +672,7 @@
 				D43A8D101CC6D17500CB94D2 /* TestASCIIConverter.swift in Sources */,
 				D42C7B471CCDF04A005BFE86 /* TestImageUtilities.swift in Sources */,
 				D43A8D121CC6D17B00CB94D2 /* TestASCIILookUpTable.swift in Sources */,
+				D4C1B4051CCFEC1000975AE1 /* TestBlockGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,6 +885,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.ASCIIfy-Mac-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASCIIfy_OSX_Example.app/Contents/MacOS/ASCIIfy_OSX_Example";
 			};
 			name = Debug;
 		};
@@ -890,6 +902,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.ASCIIfy-Mac-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASCIIfy_OSX_Example.app/Contents/MacOS/ASCIIfy_OSX_Example";
 			};
 			name = Release;
 		};

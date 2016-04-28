@@ -25,7 +25,7 @@
 import XCTest
 @testable import ASCIIfy
 
-class TestImageUtilities: XCTestCase {
+class TestBlockGrid: XCTestCase {
     var largeChecker: Image!
     override func setUp() {
         super.setUp()
@@ -42,16 +42,15 @@ class TestImageUtilities: XCTestCase {
         super.tearDown()
     }
 
-    func testDownscaleSizeIsCorrect() {
-        let result = downscaleImage(largeChecker, withFactor: 256)
-        XCTAssertEqual(result.toImage().size.width, 256)
-        XCTAssertEqual(result.toImage().size.height, 256)
+    func testPixelGridImageConstructor() {
+        let result = BlockGrid(image: largeChecker)
+        XCTAssertEqual(result.width, Int(largeChecker.size.width))
+        XCTAssertEqual(result.height, Int(largeChecker.size.height))
+        let black = BlockGrid.Block(r: 0, g: 0, b:0, a: 1)
+        let white = BlockGrid.Block(r: 1, g: 1, b:1, a: 1)
+        XCTAssertEqual(result.block(atRow: 0, column: 0), white)
+        XCTAssertEqual(result.block(atRow:1, column: 0), black)
+
     }
 
-    func testToCGImagePreservesSize() {
-        let result = largeChecker.toCGImage
-        XCTAssertEqual(CGFloat(CGImageGetWidth(result)), largeChecker.size.width)
-        XCTAssertEqual(CGFloat(CGImageGetHeight(result)), largeChecker.size.width)
-    }
-    
 }

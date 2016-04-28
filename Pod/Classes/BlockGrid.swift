@@ -28,6 +28,13 @@
 import Foundation
 import CoreGraphics
 
+func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
+    return lhs.a == rhs.a &&
+        lhs.r == rhs.r &&
+        lhs.g == rhs.g &&
+        lhs.b == rhs.b
+}
+
 /* BlockGrid is a wrapper around a buffer of block_t objects, which represent individual "pixels" in the
  ASCII art. Each block_t is just a list of CGFloat components, which can be used directly by Quartz. */
 
@@ -36,17 +43,23 @@ class BlockGrid {
     let height: Int
     private var grid: [[Block]]
 
-    struct Block {
+    struct Block: Equatable {
         let r: Double
         let g: Double
         let b: Double
         let a: Double
+
+
     }
 
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
         grid = [[Block]](count: height, repeatedValue: [Block](count: width, repeatedValue: Block(r: 0.0, g: 0.0, b: 0.0, a: 0.0)))
+    }
+
+    convenience init(image: Image) {
+        self.init(image: image.toCGImage)
     }
 
     /**

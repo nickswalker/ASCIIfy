@@ -12,23 +12,24 @@ internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGIma
     if scaleFactor > min(image.size.height, image.size.width) {
         scaleFactor = min(image.size.height, image.size.width)
     }
+    let cgImage = image.toCGImage
     let ratio = scaleFactor / image.size.width
-
     let size = CGSize(width: scaleFactor, height: ratio * image.size.height)
     let rect = CGRect(origin: CGPointZero, size: size)
-    let ctx: CGContext
-    #if os(iOS)
-        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-        ctx = UIGraphicsGetCurrentContext()!
-        image.drawInRect(rect)
-        return UIGraphicsGetImageFromCurrentImageContext().CGImage!
-    #elseif os(OSX)
-        ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
-        let cgImage = image.toCGImage
-        CGContextDrawImage(ctx, rect, cgImage)
-        let result = CGBitmapContextCreateImage(ctx)!
-        return result
-    #endif
+    let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
+    let bytesPerRow = CGImageGetBytesPerRow(cgImage)
+    let colorSpace = CGImageGetColorSpace(cgImage)
+    let bitmapInfo = CGImageGetBitmapInfo(cgImage)
+
+    let context = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+
+    CGContextSetInterpolationQuality(context, .High)
+
+    CGContextDrawImage(context, rect, cgImage)
+
+    let result = CGBitmapContextCreateImage(context)!
+    assert(CGFloat(CGImageGetWidth(result)) == scaleFactor)
+    return result
 }
 
 internal extension CGImage {
