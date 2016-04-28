@@ -11,7 +11,7 @@ env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
-  - WORKSPACE=Alamofire.xcworkspace
+  - WORKSPACE=Example/ASCIIfy.xcworkspace
   - IOS_FRAMEWORK_SCHEME="ASCIIfy-iOS"
   - OSX_FRAMEWORK_SCHEME="ASCIIfy-OSX"
   - IOS_SDK=iphonesimulator9.3
