@@ -60,8 +60,9 @@ public extension UIImage {
         return converter.convertImage(self)
     }
 
-    func fy_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int, reversed: Bool, colorMode: ASCIIConverter.ColorMode, completionHandler handler: ImageHandler) {
+    func fy_asciiImageWithFont(font: UIFont, bgColor: UIColor, columns: Int?, reversed: Bool, colorMode: ASCIIConverter.ColorMode, completionHandler handler: ImageHandler) {
         let converter = ASCIIConverter()
+        converter.font = font
         converter.backgroundColor = bgColor
         converter.columns = columns
         converter.reversedLuminance = reversed
