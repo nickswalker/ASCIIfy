@@ -24,6 +24,7 @@
 import Foundation
 
 #if os(OSX)
+    import CoreText
     public typealias Font = NSFont
     public typealias Image = NSImage
     public typealias Color = NSColor
@@ -82,6 +83,14 @@ public class ASCIIConverter {
         }
         return CGFloat(result)
     }
+
+    private func configureAttributes(inout attributes: [NSObject: AnyObject], color: Color) {
+        #if os(iOS)
+            attributes[NSForegroundColorAttributeName] = color
+        #elseif os(OSX)
+            attributes[kCTForegroundColorAttributeName] = color.CGColor
+        #endif
+    }
 }
 
 
@@ -117,14 +126,22 @@ public extension ASCIIConverter {
         let pixelGrid = BlockGrid(image: downscaled)
 
         let ctx: CGContext
-        #if os(iOS)
-        UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
-            ctx = UIGraphicsGetCurrentContext()!
-        #elseif os(OSX)
-            ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
-        #endif
         // Setup background
-        let ctxRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let ctxRect = CGRect(origin: CGPointZero, size: image.size)
+        #if os(iOS)
+            UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
+            ctx = UIGraphicsGetCurrentContext()!
+            var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
+        #elseif os(OSX)
+            let nsCtx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))
+            ctx = nsCtx!.CGContext
+            let flipVertical = CGAffineTransformMake(
+                1, 0, 0, -1, 0, ctxRect.size.height
+            )
+            CGContextConcatCTM(ctx, flipVertical)
+            var attributes: [NSObject: AnyObject] = [kCTFontAttributeName: font, kCTForegroundColorAttributeName: NSColor.blackColor().CGColor]
+        #endif
+
         if opaque {
             CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
             CGContextFillRect(ctx, ctxRect)
@@ -134,7 +151,7 @@ public extension ASCIIConverter {
 
         let blockWidth = image.size.width / CGFloat(pixelGrid.width)
         let blockHeight = image.size.height / CGFloat(pixelGrid.height)
-        var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
+
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
                 let block = pixelGrid.block(atRow: row, column: col)
@@ -144,12 +161,20 @@ public extension ASCIIConverter {
 
                 if colorMode == .Color {
                     let color = Color(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
-                     attributes[NSForegroundColorAttributeName] = color
+                     configureAttributes(&attributes, color: color)
                 } else if colorMode == .GrayScale {
                     let color = Color(white: luminance, alpha: 1.0)
-                    attributes[NSForegroundColorAttributeName] = color
+                    configureAttributes(&attributes, color: color)
+
                 }
+                #if os(iOS)
                 ASCIIResult.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
+                #elseif os(OSX)
+                    let intermediate = CFAttributedStringCreate(nil, ASCIIResult as NSString, attributes)
+                    let line = CTLineCreateWithAttributedString(intermediate)
+                    CGContextSetTextPosition(ctx, rect.origin.x, rect.origin.y)
+                    CTLineDraw(line, ctx)
+                #endif
             }
         }
 
@@ -158,6 +183,7 @@ public extension ASCIIConverter {
             UIGraphicsEndImageContext()
             return result
         #elseif os(OSX)
+
             let cgImage = CGBitmapContextCreateImage(ctx)!
             return cgImage.toImage()
         #endif
