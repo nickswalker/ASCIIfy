@@ -43,7 +43,7 @@ class ViewController: NSViewController {
         }
     }
 
-    var colorMode: ASCIIConverter.ColorMode = .BlackAndWhite {
+    var colorMode: ASCIIConverter.ColorMode = .Color {
         didSet(oldValue) {
             processInput()
         }
@@ -52,6 +52,17 @@ class ViewController: NSViewController {
     private var outputImage: CGImage? {
         didSet(oldValue) {
             self.imageView.setImage(outputImage, imageProperties: [:])
+        }
+    }
+
+    private var displayingOutput = true {
+        didSet(oldValue) {
+            if displayingOutput {
+                self.imageView.setImage(outputImage, imageProperties: [:])
+            }
+            else {
+                self.imageView.setImage(toCGImage(inputImage!), imageProperties: [:])
+            }
         }
     }
 
@@ -64,7 +75,7 @@ class ViewController: NSViewController {
 
     private func processInput() {
         inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
-                                          columns: 0, reversed: true, colorMode: colorMode){
+                                          columns: nil, reversed: true, colorMode: colorMode){
             asciified in
             self.outputImage = self.toCGImage(asciified)
                                             
@@ -74,6 +85,10 @@ class ViewController: NSViewController {
     private func toCGImage(image: NSImage) -> CGImage {
         var rect = NSRect(origin: CGPointZero, size: image.size)
         return image.CGImageForProposedRect(&rect, context: nil, hints: nil)!
+    }
+
+    @IBAction func didClickView(sender: NSClickGestureRecognizer) {
+        displayingOutput = !displayingOutput
     }
 
 }

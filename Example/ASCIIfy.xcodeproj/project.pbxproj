@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		30933761C4D74509D5F70044 /* Pods_ASCIIfy_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE310AB93771CA819EEE20D /* Pods_ASCIIfy_iOS_Example.framework */; };
 		5350E5EA7075F4FC7485445B /* Pods_ASCIIfy_OSX_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACEC1AFB9204008FA782 /* TestASCIIConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* TestASCIIConverter.swift */; };
 		6F20B6DC0DD803BAEE94946A /* Pods_ASCIIfy_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C22509D98D182AAA8C74D1C /* Pods_ASCIIfy_iOS_Tests.framework */; };
 		84AB2E0A690CFF310739F78C /* Pods_ASCIIfy_OSX_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E764F20BB5C72F8E6E1EAEE /* Pods_ASCIIfy_OSX_Example.framework */; };
@@ -24,6 +23,7 @@
 		D43B351A1CC456A100134D3B /* checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B35191CC456A100134D3B /* checker-2.png */; };
 		D43B351E1CC4685000134D3B /* TestASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43B351D1CC4685000134D3B /* TestASCIILookUpTable.swift */; };
 		D43B35201CC47A0C00134D3B /* checker-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B351F1CC47A0C00134D3B /* checker-1024.png */; };
+		D45857101CD1E1F000F664E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		D46F96DB1CC9B03200355315 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46F96DA1CC9B03200355315 /* WindowController.swift */; };
 		D4B99BD21CCDE4220027B78F /* asymmetric-checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */; };
 		D4B99BD31CCDE4220027B78F /* asymmetric-checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */; };
@@ -639,8 +639,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45857101CD1E1F000F664E1 /* ViewController.swift in Sources */,
 				D43B35151CC453E900134D3B /* AppDelegate.swift in Sources */,
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -668,7 +668,7 @@
                                     <slider key="view" verticalHuggingPriority="750" id="zOV-lA-ICX">
                                         <rect key="frame" x="0.0" y="14" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" alignment="left" minValue="10" maxValue="40" doubleValue="19.859375" tickMarkPosition="above" sliderType="linear" id="rdO-Pk-rip"/>
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="10" maxValue="200" doubleValue="200" tickMarkPosition="above" sliderType="linear" id="rdO-Pk-rip"/>
                                         <connections>
                                             <action selector="didChangeFontSize:" target="B8D-0N-5wS" id="PfK-gQ-jnl"/>
                                         </connections>
@@ -723,8 +723,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <ikImageView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BDg-ps-6o0">
+                            <ikImageView wantsLayer="YES" zoomFactor="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="BDg-ps-6o0">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <gestureRecognizers>
+                                    <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="WGC-t6-tMo">
+                                        <connections>
+                                            <action selector="didClickView:" target="XfG-lQ-9wD" id="qsF-gO-jqg"/>
+                                        </connections>
+                                    </clickGestureRecognizer>
+                                </gestureRecognizers>
                                 <color key="backgroundColor" red="0.50002289" green="0.50002289" blue="0.50002289" alpha="1" colorSpace="deviceRGB"/>
                             </ikImageView>
                         </subviews>
