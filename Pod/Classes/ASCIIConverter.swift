@@ -84,13 +84,16 @@ public class ASCIIConverter {
         return CGFloat(result)
     }
 
-    private func configureAttributes(inout attributes: [NSObject: AnyObject], color: Color) {
-        #if os(iOS)
-            attributes[NSForegroundColorAttributeName] = color
-        #elseif os(OSX)
-            attributes[kCTForegroundColorAttributeName] = color.CGColor
-        #endif
+    #if os(iOS)
+    private func configureAttributes(inout attributes: [String: NSObject], color: Color) {
+        attributes[NSForegroundColorAttributeName] = color
     }
+
+    #elseif os(OSX)
+    private func configureAttributes(inout attributes: [NSObject: AnyObject], color: Color){
+        attributes[kCTForegroundColorAttributeName] = color.CGColor
+    }
+    #endif
 }
 
 
