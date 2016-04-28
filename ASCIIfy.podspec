@@ -11,14 +11,10 @@ Includes UIImage and NSImage extensions. String and image output available.
   s.license          = 'MIT'
   s.author           = { "Nick Walker" => "nick@nickwalker.us" }
   s.source           = { :git => "https://github.com/nickswalker/ASCIIfy.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.11'
-  s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'ASCIIfy' => ['Pod/Assets/*.png']
-  }
+
 end

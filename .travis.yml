@@ -16,32 +16,29 @@ env:
   - OSX_FRAMEWORK_SCHEME="ASCIIfy-OSX"
   - IOS_SDK=iphonesimulator9.3
   - OSX_SDK=macosx10.11
-  - EXAMPLE_SCHEME="ASCIIfy iOS Example"
+  - IOS_EXAMPLE_SCHEME="ASCIIfy iOS Example"
+  - OSX_EXAMPLE_SCHEME="ASCIIfy OSX Example"
   matrix:
-    - DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="YES"
-    - DESTINATION="arch=x86_64"                    SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"     RUN_TESTS="YES" BUILD_EXAMPLE="NO"  POD_LINT="NO"
+    - DESTINATION="OS=9.3,name=iPhone 4S"  SCHEME="$IOS_EXAMPLE_SCHEME"  SDK="$IOS_SDK"  RUN_TESTS="YES" FRAMEWORK_SCHEME="$IOS_EXAMPLE_SCHEME"  BUILD_FRAMEWORK="YES" POD_LINT="YES"
+    - DESTINATION="arch=x86_64"    SCHEME="$OSX_EXAMPLE_SCHEME"  SDK="$OSX_SDK" RUN_TESTS="YES" BUILD_FRAMEWORK="YES" FRAMEWORK_SCHEME="$OSX_EXAMPLE_SCHEME"  POD_LINT="NO"
+
+
 script:
+  - gem install cocoapods --pre
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
 
   # Build Framework in Debug and Run Tests if specified
   - if [ $RUN_TESTS == "YES" ]; then
-      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
+      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
     else
-      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
-    fi
-
-  # Build Framework in ReleaseTest and Run Tests if specified
-  - if [ $RUN_TESTS == "YES" ]; then
-      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration ReleaseTest ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
-    else
-      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration ReleaseTest ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
+      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
     fi
 
   # Build Example in Debug if specified
-  - if [ $BUILD_EXAMPLE == "YES" ]; then
-      xcodebuild -workspace "$WORKSPACE" -scheme "$EXAMPLE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
+  - if [ $BUILD_FRAMEWORK == "YES" ]; then
+      xcodebuild -workspace "$WORKSPACE" -scheme "$FRAMEWORK_SCHEME" -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
     fi
 
   # Run `pod lib lint` if specified
