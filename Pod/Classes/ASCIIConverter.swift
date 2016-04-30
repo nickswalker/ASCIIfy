@@ -176,9 +176,6 @@ public extension ASCIIConverter {
         let downscaled = downscaleImage(image, withFactor: columns)
         let pixelGrid = BlockGrid(image: downscaled)
 
-        let blockWidth = image.size.width / CGFloat(pixelGrid.width)
-        let blockHeight = image.size.height / CGFloat(pixelGrid.height)
-
         let result = pixelGrid.map { block -> (String, Color) in
             let luminance = self.luminance(block)
             let mappedString = self.definition.stringForLuminance(Double(luminance))!
