@@ -32,6 +32,7 @@ internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGIma
     return result
 }
 
+
 internal extension CGImage {
     func toImage() -> Image {
         #if os(OSX)

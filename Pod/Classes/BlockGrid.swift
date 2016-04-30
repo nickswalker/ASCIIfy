@@ -43,15 +43,22 @@ class BlockGrid {
     let height: Int
     private var grid: [[Block]]
 
+    /**
+     *  Represents an RGBA value
+     */
     struct Block: Equatable {
         let r: Double
         let g: Double
         let b: Double
         let a: Double
-
-
     }
 
+    /**
+     Creates a grid with all values set to black
+
+     - parameter width:  width of the grid
+     - parameter height: height of the grid
+     */
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
@@ -89,17 +96,47 @@ class BlockGrid {
                 let g = Double(rawData[byteIndex + 1]) / 255.0
                 let b = Double(rawData[byteIndex + 2]) / 255.0
                 let a = Double(rawData[byteIndex + 3]) / 255.0
-                copy(BlockGrid.Block(r: r, g: g, b: b, a: a), toRow: row, column: col)
+                grid[row][col] = BlockGrid.Block(r: r, g: g, b: b, a: a)
             }
         }
         free(rawData)
     }
 
-    func copy(block: Block, toRow row: Int, column: Int){
-        grid[row][column] = block
-    }
-
     func block(atRow row: Int, column: Int) -> Block {
         return grid[row][column]
+    }
+}
+
+// MARK: Functional helpers
+extension BlockGrid {
+    /**
+     Create a 2D array by applying a transformation to each block in the grid
+
+     - parameter transformation: closure to apply to each block
+
+     - returns: 2D array of transformed values
+     */
+    func map<T>(transformation: Block -> T) -> [[T]] {
+        var result = [[T]](count: grid.count, repeatedValue: [T]())
+        for row in 0..<height {
+            for col in 0..<width {
+                result[row].append(transformation(grid[row][col]))
+            }
+        }
+        return result
+    }
+
+    /**
+     Apply a transformation to each block in the grid.
+
+     - parameter transformation: closure to apply to each block
+     */
+    func forEach(transformation: Block -> Block) {
+        for row in 0..<height {
+            for col in 0..<width {
+                grid[row][col] = transformation(grid[row][col])
+            }
+        }
+
     }
 }

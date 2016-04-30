@@ -94,9 +94,60 @@ public class ASCIIConverter {
         attributes[kCTForegroundColorAttributeName] = color.CGColor
     }
     #endif
+
+    private func stringsAndColorsToContext(data: [[(String, Color)]], size: CGSize, bgColor: Color, opaque: Bool) -> Image {
+        // Setup background
+        let ctxRect = CGRect(origin: CGPointZero, size: size)
+
+
+        let bitsPerComponent = 8
+        let bytesPerRow = 4 * Int(size.width)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
+        let ctx = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+        #if os(iOS)
+            var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
+        #elseif os(OSX)
+            let flipVertical = CGAffineTransformMake(
+                1, 0, 0, -1, 0, ctxRect.size.height
+            )
+            CGContextConcatCTM(ctx, flipVertical)
+            var attributes: [NSObject: AnyObject] = [kCTFontAttributeName: font, kCTForegroundColorAttributeName: NSColor.blackColor().CGColor]
+        #endif
+
+        if opaque {
+            CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
+            CGContextFillRect(ctx, ctxRect)
+        } else {
+            CGContextClearRect(ctx, ctxRect)
+        }
+
+        let height = data.count
+        let width = data[0].count
+        let blockWidth = size.width / CGFloat(width)
+        let blockHeight = size.height / CGFloat(height)
+
+        for row in 0..<height {
+            for col in 0..<width {
+                let (string, color) = data[row][col]
+                let rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
+                configureAttributes(&attributes, color: color)
+                let intermediate = CFAttributedStringCreate(nil, string as NSString, attributes)
+                let line = CTLineCreateWithAttributedString(intermediate)
+                CGContextSetTextPosition(ctx, rect.origin.x, rect.origin.y)
+                CTLineDraw(line, ctx!)
+            }
+        }
+
+        let cgImage = CGBitmapContextCreateImage(ctx)!
+        return cgImage.toImage()
+
+    }
+
 }
 
-
+// MARK: Conversion
 public extension ASCIIConverter {
 
     func convertImage(input: Image, completionHandler handler: ImageHandler) {
@@ -121,75 +172,32 @@ public extension ASCIIConverter {
     }
 
     func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool, colorMode: ColorMode) -> Image {
-        if colorMode == .BlackAndWhite {
-            return convertImageBlackAndWhite(image, withFont: font, bgColor: bgColor, columns: columns, reversed: reversed)
-        }
         let opaque = !isTransparent()
         let downscaled = downscaleImage(image, withFactor: columns)
         let pixelGrid = BlockGrid(image: downscaled)
 
-        let ctx: CGContext
-        // Setup background
-        let ctxRect = CGRect(origin: CGPointZero, size: image.size)
-        #if os(iOS)
-            UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
-            ctx = UIGraphicsGetCurrentContext()!
-            var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
-        #elseif os(OSX)
-            let nsCtx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))
-            ctx = nsCtx!.CGContext
-            let flipVertical = CGAffineTransformMake(
-                1, 0, 0, -1, 0, ctxRect.size.height
-            )
-            CGContextConcatCTM(ctx, flipVertical)
-            var attributes: [NSObject: AnyObject] = [kCTFontAttributeName: font, kCTForegroundColorAttributeName: NSColor.blackColor().CGColor]
-        #endif
-
-        if opaque {
-            CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
-            CGContextFillRect(ctx, ctxRect)
-        } else {
-            CGContextClearRect(ctx, ctxRect)
-        }
-
         let blockWidth = image.size.width / CGFloat(pixelGrid.width)
         let blockHeight = image.size.height / CGFloat(pixelGrid.height)
 
-        for row in 0..<pixelGrid.height {
-            for col in 0..<pixelGrid.width {
-                let block = pixelGrid.block(atRow: row, column: col)
-                let luminance = self.luminance(block)
-                let ASCIIResult = definition.stringForLuminance(Double(luminance))!
-                let rect = CGRect(x: blockWidth * CGFloat(col), y: blockHeight * CGFloat(row), width: blockWidth, height: blockHeight)
-
-                if colorMode == .Color {
-                    let color = Color(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
-                     configureAttributes(&attributes, color: color)
-                } else if colorMode == .GrayScale {
-                    let color = Color(white: luminance, alpha: 1.0)
-                    configureAttributes(&attributes, color: color)
-
-                }
-                #if os(iOS)
-                ASCIIResult.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
-                #elseif os(OSX)
-                    let intermediate = CFAttributedStringCreate(nil, ASCIIResult as NSString, attributes)
-                    let line = CTLineCreateWithAttributedString(intermediate)
-                    CGContextSetTextPosition(ctx, rect.origin.x, rect.origin.y)
-                    CTLineDraw(line, ctx)
-                #endif
+        let result = pixelGrid.map { block -> (String, Color) in
+            let luminance = self.luminance(block)
+            let mappedString = self.definition.stringForLuminance(Double(luminance))!
+            let color: Color
+            if colorMode == .Color {
+                color = Color(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
+            } else if colorMode == .GrayScale {
+                color = Color(white: luminance, alpha: 1.0)
+            } else {
+                color = Color.blackColor()
             }
+            return (mappedString, color)
         }
+        var bgColor = bgColor
+        if colorMode == .BlackAndWhite {
+            bgColor = .whiteColor()
+        }
+        return stringsAndColorsToContext(result, size: image.size, bgColor: bgColor, opaque: opaque)
 
-        #if os(iOS)
-            let result = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return result
-        #elseif os(OSX)
-
-            let cgImage = CGBitmapContextCreateImage(ctx)!
-            return cgImage.toImage()
-        #endif
     }
 
     func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool) -> Image {
