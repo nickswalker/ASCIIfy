@@ -50,7 +50,11 @@ class TestBlockGrid: XCTestCase {
         let white = BlockGrid.Block(r: 1, g: 1, b:1, a: 1)
         XCTAssertEqual(result.block(atRow: 0, column: 0), white)
         XCTAssertEqual(result.block(atRow:1, column: 0), black)
-
     }
 
+    func testConstructionFromImagePerformance() {
+        measureBlock { 
+            let _ = BlockGrid(image: self.largeChecker)
+        }
+    }
 }

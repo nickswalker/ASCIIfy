@@ -81,7 +81,7 @@ class TestASCIIConverter: XCTestCase {
         XCTAssertEqual(result.size, largeChecker.size)
     }
 
-    func testStringConversionPerformance() {
+    func testImageConversionPerformance() {
         let converter = ASCIIConverter()
         measureBlock {
             let result = converter.convertImage(self.largeChecker)
@@ -89,5 +89,14 @@ class TestASCIIConverter: XCTestCase {
         }
 
     }
+
+    func testStringConversionPerformance() {
+        let converter = ASCIIConverter()
+        measureBlock {
+            let _ = converter.convertToString(self.largeChecker)
+        }
+
+    }
+
     
 }
