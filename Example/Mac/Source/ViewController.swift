@@ -66,13 +66,6 @@ class ViewController: NSViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("flower", ofType: "jpg")!
-        inputImage = NSImage(contentsOfFile: path)!
-    }
-
     private func processInput() {
         inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
                                           columns: nil, reversed: true, colorMode: colorMode){

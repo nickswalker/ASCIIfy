@@ -12,9 +12,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="ASCIIfy_Example_Mac" id="1Xt-HY-uBw">
+                            <menuItem title="ASCIIfy" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="ASCIIfy_Example_Mac" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="ASCIIfy" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About ASCIIfy_Example_Mac" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -652,8 +652,8 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="ASCIIfy_OSX_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" title="ASCIIfy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -677,22 +677,16 @@
                                 <toolbarItem implicitItemIdentifier="A14486E5-1494-4CF0-B082-1EE9D474C4D4" label="Color Mode" paletteLabel="Color Mode" id="GpR-7a-ghw">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="104" height="24"/>
-                                    <size key="maxSize" width="104" height="24"/>
+                                    <size key="maxSize" width="300" height="26"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="cFZ-Pg-3dJ">
-                                        <rect key="frame" x="0.0" y="14" width="104" height="24"/>
+                                        <rect key="frame" x="0.0" y="14" width="197" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="jZd-zO-OxK">
                                             <font key="font" metaFont="system"/>
                                             <segments>
-                                                <segment width="32">
-                                                    <nil key="label"/>
-                                                </segment>
-                                                <segment width="32" selected="YES" tag="1">
-                                                    <nil key="label"/>
-                                                </segment>
-                                                <segment width="32">
-                                                    <nil key="label"/>
-                                                </segment>
+                                                <segment label="Color" selected="YES"/>
+                                                <segment label="Grayscale" tag="1"/>
+                                                <segment label="B&amp;W"/>
                                             </segments>
                                         </segmentedCell>
                                         <connections>
@@ -703,11 +697,13 @@
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="GpR-7a-ghw"/>
+                                <toolbarItem reference="hK1-nB-OEk"/>
                                 <toolbarItem reference="D8g-To-M6I"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
                     <connections>
+                        <outlet property="fontSizeSlider" destination="zOV-lA-ICX" id="DoI-2r-Mwi"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>

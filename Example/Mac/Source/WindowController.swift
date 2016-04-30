@@ -24,12 +24,24 @@
 
 import Foundation
 import AppKit
+import ASCIIfy
 
 class WindowController: NSWindowController {
     @IBOutlet weak var toolbar: NSToolbar!
+    @IBOutlet weak var fontSizeSlider: NSSlider!
 
     var viewController: ViewController {
         return self.window!.contentViewController! as! ViewController
+    }
+
+    override func windowDidLoad() {
+        // Configure demo image
+
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let path = bundle.pathForResource("flower", ofType: "jpg")!
+        let image = NSImage(contentsOfFile: path)!
+        fontSizeSlider.maxValue = Double(image.size.width) / 100.0
+        viewController.inputImage = image
     }
 
     @IBAction func didChangeFontSize(sender: NSSlider) {
@@ -38,10 +50,21 @@ class WindowController: NSWindowController {
     }
 
     @IBAction func didChangeColorMode(sender: NSSegmentedControl) {
-        
+        let selected = sender.selectedSegment
+        let mode: ASCIIConverter.ColorMode = {
+            switch selected {
+            case 1:
+                return ASCIIConverter.ColorMode.GrayScale
+            case 2:
+                return ASCIIConverter.ColorMode.BlackAndWhite
+            default:
+                return ASCIIConverter.ColorMode.Color
+            }
+        }()
+        viewController.colorMode = mode
     }
 
-    @IBAction func openImage(sender: NSMenuItem) {
+    func openDocument(sender: NSMenuItem) {
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
@@ -50,8 +73,10 @@ class WindowController: NSWindowController {
         openPanel.beginSheetModalForWindow(window!) { result in
             if result == NSFileHandlingPanelOKButton {
                 let url = openPanel.URLs[0]
+                let image = NSImage(contentsOfURL: url)
+                self.fontSizeSlider.maxValue = Double(image!.size.width) / 100.0
+                self.viewController.inputImage = image
 
-                self.viewController.inputImage = NSImage(contentsOfURL: url)
             }
         }
     }
