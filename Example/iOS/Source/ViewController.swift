@@ -27,57 +27,105 @@ import ASCIIfy
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var pickImage: UIButton!
     @IBOutlet weak var fontSizeSlider: UISlider!
-    @IBOutlet weak var fontSizeButton: UIBarButtonItem!
+    @IBOutlet weak var fontSizeLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    private var fontSizeLabel: UILabel!
     private var imagePicker: UIImagePickerController?
     private var inputImage: UIImage?
-    private var outputImage: UIImage?
-    private var colorMode: ASCIIConverter.ColorMode = .Color
+    private var outputImage: UIImage? {
+        didSet(oldValue) {
+            if displayingOutput {
+                imageView.image = outputImage
+            }
+        }
+    }
+    private var colorMode: ASCIIConverter.ColorMode = .Color {
+        didSet(oldValue) {
+            processInput()
+        }
+    }
+    private var displayingOutput = true {
+        didSet(oldValue){
+            if displayingOutput {
+                imageView.image = outputImage
+            } else {
+                imageView.image = inputImage
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fontSizeLabel = UILabel(frame: CGRect(x: 50, y: 50, width: 25, height: 20))
+        // Configure demo image
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let path = bundle.pathForResource("flower", ofType: "jpg")!
+        inputImage = UIImage(contentsOfFile: path)
+        processInput()
         fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
-        fontSizeButton.customView = fontSizeLabel
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        inputImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        imagePicker?.dismissViewControllerAnimated(true, completion: nil)
+        processInput()
     }
+
+    private func processInput() {
+        let font = ASCIIConverter.defaultFont.fontWithSize(CGFloat(fontSizeSlider.value))
+        activityIndicator.startAnimating()
+        inputImage?.fy_asciiImageWith(font, colorMode: colorMode) { image in
+            self.activityIndicator.stopAnimating()
+            self.outputImage = image
+        }
+
+    }
+
+    // MARK: Interaction
 
     @IBAction func pickNewImage(sender: UIBarButtonItem) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
         picker.sourceType = .PhotoLibrary
-        presentViewController(picker, animated: true, completion: nil)
         self.imagePicker = picker
+        presentViewController(picker, animated: true, completion: nil)
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        inputImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        imagePicker?.dismissViewControllerAnimated(true, completion: nil)
-        outputImage = inputImage?.fy_asciiImage()
-        imageView.image = outputImage
+    @IBAction func didShare(sender: UIBarButtonItem) {
+        guard let outputImage = outputImage else {
+            return
+        }
+        let controller = UIActivityViewController(activityItems: [outputImage], applicationActivities: nil)
+        presentViewController(controller, animated: true, completion: nil)
     }
 
     @IBAction func didPressDown(sender: UIButton) {
-        imageView.image = inputImage
+        displayingOutput = false
     }
 
     @IBAction func didRelease(sender: UIButton) {
-        imageView.image = outputImage
+        displayingOutput = true
     }
 
     @IBAction func fontSizeChanged(sender: UISlider) {
         fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
-        outputImage = inputImage?.fy_asciiImageWithFont(UIFont.systemFontOfSize(CGFloat(sender.value)))
-        imageView.image = outputImage
+        processInput()
+    }
+
+    // MARK: Segues
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "options" {
+            let navController = (segue.destinationViewController as? UINavigationController)
+            let optionsController = navController?.childViewControllers[0] as? OptionsController
+            optionsController?.modeChangeHandler = { self.colorMode = $0}
+            optionsController?.mode = colorMode
+        }
+    }
+
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
     }
 
 }

@@ -35,6 +35,8 @@
 		D4C1B4071CCFEF2A00975AE1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4C1B4061CCFEF2A00975AE1 /* Images.xcassets */; };
 		D4C1B4081CCFEF7F00975AE1 /* checker-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B35191CC456A100134D3B /* checker-2.png */; };
 		D4C1B4091CCFEF8800975AE1 /* checker-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = D43B351F1CC47A0C00134D3B /* checker-1024.png */; };
+		D4CE44F61CD6F31800285A07 /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4F45DD91CC950800099662B /* flower.jpg */; };
+		D4D8E18F1CD6DBCF0059735A /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D8E18E1CD6DBCF0059735A /* OptionsController.swift */; };
 		D4F45DDB1CC952E70099662B /* flower.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4F45DD91CC950800099662B /* flower.jpg */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +97,7 @@
 		D4C1B4011CCFE44600975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Resources/Main.storyboard; sourceTree = "<group>"; };
 		D4C1B4031CCFEC1000975AE1 /* TestBlockGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestBlockGrid.swift; sourceTree = "<group>"; };
 		D4C1B4061CCFEF2A00975AE1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		D4D8E18E1CD6DBCF0059735A /* OptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionsController.swift; path = Source/OptionsController.swift; sourceTree = "<group>"; };
 		D4F45DD91CC950800099662B /* flower.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flower.jpg; sourceTree = "<group>"; };
 		DC3481F6FD19823D6F559474 /* Pods_ASCIIfy_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F319F58F0B54F496924C54BB /* Pods_ASCIIfy_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIfy_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +183,7 @@
 			children = (
 				D43B35141CC453E900134D3B /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				D4D8E18E1CD6DBCF0059735A /* OptionsController.swift */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for ASCIIfy";
@@ -413,6 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4CE44F61CD6F31800285A07 /* flower.jpg in Resources */,
 				D4C1B4071CCFEF2A00975AE1 /* Images.xcassets in Resources */,
 				D4C1B4001CCFE42500975AE1 /* Main.storyboard in Resources */,
 				D4C1B3FF1CCFE42500975AE1 /* LaunchScreen.xib in Resources */,
@@ -640,6 +645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D45857101CD1E1F000F664E1 /* ViewController.swift in Sources */,
+				D4D8E18F1CD6DBCF0059735A /* OptionsController.swift in Sources */,
 				D43B35151CC453E900134D3B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
