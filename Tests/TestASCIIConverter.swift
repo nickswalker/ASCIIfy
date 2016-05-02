@@ -57,21 +57,21 @@ class TestASCIIConverter: XCTestCase {
     
     func testBasicChecker() {
         let converter = ASCIIConverter()
-        converter.reversedLuminance = true
+        converter.invertLuminance = true
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "@   \n  @ \n")
     }
 
     func testBasicCheckerInverse() {
         let converter = ASCIIConverter()
-        converter.reversedLuminance = false
+        converter.invertLuminance = false
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "  @ \n@   \n")
     }
 
     func testThatImageOrientationIsNotChanged() {
         let converter = ASCIIConverter()
-        converter.reversedLuminance = false
+        converter.invertLuminance = false
         let result = converter.convertToString(asymmetricChecker)
         XCTAssertEqual(result, "  @ \n<   \n")
     }

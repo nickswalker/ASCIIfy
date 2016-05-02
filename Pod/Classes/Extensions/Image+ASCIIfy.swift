@@ -23,57 +23,41 @@
 //
 
 import Foundation
+#if os(iOS)
+    import UIKit
+#endif
 
-#if os(OSX)
-public extension NSImage {
-    func fy_asciiImage() -> NSImage {
-        let converter = ASCIIConverter()
-        return converter.convertImage(self)
-    }
-
-    func fy_asciiImageWithFont(font: NSFont) -> NSImage {
-        let converter = ASCIIConverter()
-        converter.font = font
-        return converter.convertImage(self)
-    }
+public extension Image {
 
     func fy_asciiString() -> String {
         let converter = ASCIIConverter()
         return converter.convertToString(self)
     }
 
-    func fy_asciiImageCompletionHandler(handler: ImageHandler) {
+    func fy_asciiStringWith(handler: StringHandler) {
         let converter = ASCIIConverter()
-        converter.convertImage(self) { handler?($0)}
+        converter.convertToString(self) { handler($0) }
     }
-
-    func fy_asciiImageWithFont(font: NSFont, completionHandler handler: ImageHandler) {
+    
+    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont) -> Image {
         let converter = ASCIIConverter()
-        converter.font = font
-        converter.convertImage(self) { handler?($0)}
-    }
-
-    func fy_asciiImage(bgColor: NSColor, colorMode: ASCIIConverter.ColorMode) -> NSImage {
-        let converter = ASCIIConverter()
-        converter.backgroundColor = bgColor
-        converter.colorMode = colorMode
         return converter.convertImage(self)
     }
 
-    func fy_asciiImageWithFont(font: NSFont, bgColor: NSColor, columns: Int?, reversed: Bool, colorMode: ASCIIConverter.ColorMode, completionHandler handler: ImageHandler) {
+    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont, completionHandler handler: ImageHandler) {
+        let converter = ASCIIConverter()
+        converter.font = font
+        converter.convertImage(self) { handler($0)}
+    }
+
+    func fy_asciiImageWith(font: Font = ASCIIConverter.defaultFont, bgColor: Color = .blackColor(), columns: Int? = nil, invertLuminance: Bool = true, colorMode: ASCIIConverter.ColorMode = .Color, completionHandler handler: ImageHandler) {
         let converter = ASCIIConverter()
         converter.font = font
         converter.backgroundColor = bgColor
         converter.columns = columns
-        converter.reversedLuminance = reversed
+        converter.invertLuminance = invertLuminance
         converter.colorMode = colorMode
-        converter.convertImage(self) { handler?($0) }
+        converter.convertImage(self) { handler($0) }
     }
 
-    func fy_asciiStringCompletionHandler(handler: StringHandler) {
-        let converter = ASCIIConverter()
-        converter.convertToString(self) { handler?($0) }
-    }
 }
-
-#endif

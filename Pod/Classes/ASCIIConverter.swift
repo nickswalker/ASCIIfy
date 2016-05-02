@@ -35,15 +35,16 @@ import Foundation
     public typealias Color = UIColor
 #endif
 
-public typealias ImageHandler = ((Image) -> Void)?
-public typealias StringHandler = ((String) -> Void)?
+public typealias ImageHandler = ((Image) -> Void)
+public typealias StringHandler = ((String) -> Void)
 
 public class ASCIIConverter {
     var definition = ASCIILookUpTable()
-    public var font = Font.systemFontOfSize(defaultFontSize)
+    public static var defaultFont = Font(name: "Courier", size: 12.0)!
+    public var font = ASCIIConverter.defaultFont
     public var backgroundColor = Color.clearColor()
     var columns: Int?
-    public var reversedLuminance = true
+    public var invertLuminance = true
     public var colorMode = ColorMode.Color
     private func gridWidth(width: Int) -> Int {
         if columns ?? 0 <= 0 {
@@ -52,8 +53,6 @@ public class ASCIIConverter {
             return Int(columns!)
         }
     }
-
-    static let defaultFontSize: CGFloat = 10.0
 
     public enum ColorMode {
         case BlackAndWhite,
@@ -78,7 +77,7 @@ public class ASCIIConverter {
 
     private func luminance(block: BlockGrid.Block) -> CGFloat {
         var result = 0.2126 * block.r + 0.7152 * block.g + 0.0722 * block.b
-        if reversedLuminance {
+        if invertLuminance {
             result = (1.0 - result)
         }
         return CGFloat(result)
@@ -99,20 +98,19 @@ public class ASCIIConverter {
         // Setup background
         let ctxRect = CGRect(origin: CGPointZero, size: size)
 
-
         let bitsPerComponent = 8
         let bytesPerRow = 4 * Int(size.width)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
         let ctx = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+        let flipVertical = CGAffineTransformMake(
+            1, 0, 0, -1, 0, ctxRect.size.height
+        )
+        CGContextConcatCTM(ctx, flipVertical)
         #if os(iOS)
             var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
         #elseif os(OSX)
-            let flipVertical = CGAffineTransformMake(
-                1, 0, 0, -1, 0, ctxRect.size.height
-            )
-            CGContextConcatCTM(ctx, flipVertical)
             var attributes: [NSObject: AnyObject] = [kCTFontAttributeName: font, kCTForegroundColorAttributeName: NSColor.blackColor().CGColor]
         #endif
 
@@ -153,25 +151,25 @@ public extension ASCIIConverter {
     func convertImage(input: Image, completionHandler handler: ImageHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let gridWidth = self.gridWidth(Int(input.size.width))
-            let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, reversed: self.reversedLuminance, colorMode: self.colorMode)
-            dispatch_async(dispatch_get_main_queue()) { handler?(output) }
+            let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, invertLuminance: self.invertLuminance, colorMode: self.colorMode)
+            dispatch_async(dispatch_get_main_queue()) { handler(output) }
         }
     }
 
     func convertToString(input: Image, completionHandler handler: StringHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             let output = self.convertToString(input)
-            dispatch_async(dispatch_get_main_queue(), { handler?(output) })
+            dispatch_async(dispatch_get_main_queue(), { handler(output) })
         })
     }
 
     func convertImage(input: Image) -> Image {
         let gridWidth = self.gridWidth(Int(input.size.width))
-        let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, reversed: reversedLuminance, colorMode: colorMode)
+        let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, invertLuminance: invertLuminance, colorMode: colorMode)
         return output
     }
 
-    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool, colorMode: ColorMode) -> Image {
+    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, invertLuminance: Bool, colorMode: ColorMode) -> Image {
         let opaque = !isTransparent()
         let downscaled = downscaleImage(image, withFactor: columns)
         let pixelGrid = BlockGrid(image: downscaled)
@@ -197,52 +195,19 @@ public extension ASCIIConverter {
 
     }
 
-    func convertImageBlackAndWhite(image: Image, withFont font: Font, bgColor: Color, columns: Int, reversed: Bool) -> Image {
-        let opaque = !isTransparent()
-        let string = convertToString(image)
-
-        let ctx: CGContext
-        #if os(iOS)
-            UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
-            ctx = UIGraphicsGetCurrentContext()!
-        #elseif os(OSX)
-            ctx = NSGraphicsContext(bitmapImageRep: NSBitmapImageRep(CGImage: image.toCGImage))!.CGContext
-        #endif
-        // Setup background
-        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        if opaque {
-            CGContextSetFillColorWithColor(ctx, bgColor.CGColor)
-            CGContextFillRect(ctx, rect)
-        } else {
-            CGContextClearRect(ctx, rect)
-        }
-
-        let attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
-
-        string.drawWithRect(rect, options: .UsesLineFragmentOrigin, attributes: attributes, context: nil)
-
-        let cgImage = CGBitmapContextCreateImage(ctx)!
-
-        #if os(iOS)
-            UIGraphicsEndImageContext()
-        #endif
-        return cgImage.toImage()
-    }
-
     func convertToString(input: Image) -> String {
         let gridWidth = self.gridWidth(Int(input.size.width))
         let scaledImage = downscaleImage(input, withFactor: gridWidth)
         let pixelGrid = BlockGrid(image: scaledImage)
-        let str = NSMutableString(string: "")
+        var str = ""
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
                 let block = pixelGrid.block(atRow: row, column: col)
                 let luminance = self.luminance(block)
                 let ASCII = definition.stringForLuminance(Double(luminance))
-                str.appendString(ASCII!)
-                str.appendString(" ")
+                str += ASCII! + " "
             }
-            str.appendString("\n")
+            str += "\n"
         }
         return String(str)
     }
