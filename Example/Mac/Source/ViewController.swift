@@ -67,8 +67,8 @@ class ViewController: NSViewController {
     }
 
     private func processInput() {
-        inputImage?.fy_asciiImageWithFont(NSFont.systemFontOfSize(fontSize), bgColor: .blackColor(),
-                                          columns: nil, reversed: true, colorMode: colorMode){
+        let font = NSFont(name: ASCIIConverter.defaultFont.fontName, size: fontSize)!
+        inputImage?.fy_asciiImageWith(font, colorMode: colorMode){
             asciified in
             self.outputImage = self.toCGImage(asciified)
                                             
