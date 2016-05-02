@@ -34,7 +34,6 @@
 		C4009EB2A500B54A308A35748D0CEC2A /* Pods-ASCIIfy_iOS_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 22BB798957D109657E75F8AEFF78D395 /* Pods-ASCIIfy_iOS_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4923066CB801F55043BD44CB912AD64 /* ASCIIfy-OSX-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE603B0E6DB4FCA710865B36792EAEF /* ASCIIfy-OSX-dummy.m */; };
 		C4A3C8ED237B52EBCFD16F7AFC06798D /* BlockGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A668025611847C6517C4116A6F0F297 /* BlockGrid.swift */; };
-		D4D8E1911CD6E9780059735A /* ConversionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D8E1901CD6E9780059735A /* ConversionOperation.swift */; };
 		DEBD7BA58EAE2BB197FA3795C709C94D /* ASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031D505B6786395BC3FFE74F4B9520D /* ASCIILookUpTable.swift */; };
 		E21FDADE2EEAAE3F61B5F6A5ADDA28C4 /* ASCIIfy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9EC49A62A91FB82BA6A1994E3ACF0F /* ASCIIfy.bundle */; };
 		E94B1CF8D3DEF1AEE205D8F74ECD0ED8 /* ASCIILookUpTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031D505B6786395BC3FFE74F4B9520D /* ASCIILookUpTable.swift */; };
@@ -130,7 +129,6 @@
 		CE0AC5232AD70750157A15B296BD47AA /* ASCIIConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ASCIIConverter.swift; sourceTree = "<group>"; };
 		CF5E885E6EA616CB7B50836FD9EE3651 /* ASCIIfy-OSX-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ASCIIfy-OSX-umbrella.h"; sourceTree = "<group>"; };
 		D18E99DB12BECE645A09A16AAF17F034 /* Pods-ASCIIfy_iOS_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ASCIIfy_iOS_Example-umbrella.h"; sourceTree = "<group>"; };
-		D4D8E1901CD6E9780059735A /* ConversionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionOperation.swift; sourceTree = "<group>"; };
 		D67DC1FBDE9F6DA050CD3A3E15702365 /* Pods-ASCIIfy_iOS_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ASCIIfy_iOS_Tests-dummy.m"; sourceTree = "<group>"; };
 		DB7036B8BCD7D57200181AFB980BAA91 /* ASCIIfy-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ASCIIfy-iOS-dummy.m"; path = "../ASCIIfy-iOS/ASCIIfy-iOS-dummy.m"; sourceTree = "<group>"; };
 		DE12C3895C96613F0E5800C8F31E8FED /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				0A668025611847C6517C4116A6F0F297 /* BlockGrid.swift */,
 				337E561B85FE79B8F9E25EF8B093936A /* ImageUtilities.swift */,
 				66154351B3BADB6F693E33F0C898792C /* Extensions */,
-				D4D8E1901CD6E9780059735A /* ConversionOperation.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -750,7 +747,6 @@
 				C4A3C8ED237B52EBCFD16F7AFC06798D /* BlockGrid.swift in Sources */,
 				B2A46E368F72A0EB89EEC595509EF2A4 /* ImageUtilities.swift in Sources */,
 				F362C9EFE1EA650C23A8540E8A82F415 /* Image+ASCIIfy.swift in Sources */,
-				D4D8E1911CD6E9780059735A /* ConversionOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
