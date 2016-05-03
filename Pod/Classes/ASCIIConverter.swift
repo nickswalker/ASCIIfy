@@ -38,13 +38,13 @@ import Foundation
 public typealias ImageHandler = ((Image) -> Void)
 public typealias StringHandler = ((String) -> Void)
 
+/// Converts images to ASCII art as a string or an image
 public class ASCIIConverter {
-    var definition = ASCIILookUpTable()
+    var lut: LookupTable = LuminanceLookupTable()
     public static var defaultFont = Font(name: "Courier", size: 12.0)!
     public var font = ASCIIConverter.defaultFont
     public var backgroundColor = Color.clearColor()
     var columns: Int?
-    public var invertLuminance = true
     public var colorMode = ColorMode.Color
     private func gridWidth(width: Int) -> Int {
         if columns ?? 0 <= 0 {
@@ -53,7 +53,7 @@ public class ASCIIConverter {
             return Int(columns!)
         }
     }
-
+    
     public enum ColorMode {
         case BlackAndWhite,
         GrayScale,
@@ -63,24 +63,12 @@ public class ASCIIConverter {
     public init() {
     }
 
-    public init(luminanceToStringMapping: [Double: String]) {
-        definition = ASCIILookUpTable(luminanceToStringMapping: luminanceToStringMapping)
+    public init(lut: LookupTable) {
+        self.lut = lut
     }
 
-    public init(definition: ASCIILookUpTable) {
-        self.definition = definition
-    }
-
-    func isTransparent() -> Bool {
+    private func isTransparent() -> Bool {
         return backgroundColor == Color.clearColor()
-    }
-
-    private func luminance(block: BlockGrid.Block) -> CGFloat {
-        var result = 0.2126 * block.r + 0.7152 * block.g + 0.0722 * block.b
-        if invertLuminance {
-            result = (1.0 - result)
-        }
-        return CGFloat(result)
     }
 
     #if os(iOS)
@@ -151,7 +139,7 @@ public extension ASCIIConverter {
     func convertImage(input: Image, completionHandler handler: ImageHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let gridWidth = self.gridWidth(Int(input.size.width))
-            let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, invertLuminance: self.invertLuminance, colorMode: self.colorMode)
+            let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, colorMode: self.colorMode)
             dispatch_async(dispatch_get_main_queue()) { handler(output) }
         }
     }
@@ -165,23 +153,22 @@ public extension ASCIIConverter {
 
     func convertImage(input: Image) -> Image {
         let gridWidth = self.gridWidth(Int(input.size.width))
-        let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, invertLuminance: invertLuminance, colorMode: colorMode)
+        let output = convertImage(input, withFont: font, bgColor: backgroundColor, columns: gridWidth, colorMode: colorMode)
         return output
     }
 
-    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, invertLuminance: Bool, colorMode: ColorMode) -> Image {
+    func convertImage(image: Image, withFont font: Font, bgColor: Color, columns: Int, colorMode: ColorMode) -> Image {
         let opaque = !isTransparent()
         let downscaled = downscaleImage(image, withFactor: columns)
         let pixelGrid = BlockGrid(image: downscaled)
 
         let result = pixelGrid.map { block -> (String, Color) in
-            let luminance = self.luminance(block)
-            let mappedString = self.definition.stringForLuminance(Double(luminance))!
+            let mappedString = self.lut.lookup(block)!
             let color: Color
             if colorMode == .Color {
                 color = Color(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: 1.0)
             } else if colorMode == .GrayScale {
-                color = Color(white: luminance, alpha: 1.0)
+                color = Color(white: CGFloat(LuminanceLookupTable.luminance(block)), alpha: 1.0)
             } else {
                 color = Color.blackColor()
             }
@@ -203,9 +190,8 @@ public extension ASCIIConverter {
         for row in 0..<pixelGrid.height {
             for col in 0..<pixelGrid.width {
                 let block = pixelGrid.block(atRow: row, column: col)
-                let luminance = self.luminance(block)
-                let ASCII = definition.stringForLuminance(Double(luminance))
-                str += ASCII! + " "
+                let outchar = lut.lookup(block)
+                str += outchar! + " "
             }
             str += "\n"
         }

@@ -28,7 +28,7 @@
 import Foundation
 import CoreGraphics
 
-func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
+public func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
     return lhs.a == rhs.a &&
         lhs.r == rhs.r &&
         lhs.g == rhs.g &&
@@ -38,7 +38,7 @@ func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
 /* BlockGrid is a wrapper around a buffer of block_t objects, which represent individual "pixels" in the
  ASCII art. Each block_t is just a list of CGFloat components, which can be used directly by Quartz. */
 
-class BlockGrid {
+public class BlockGrid {
     let width: Int
     let height: Int
     private var grid: [[Block]]
@@ -46,7 +46,7 @@ class BlockGrid {
     /**
      *  Represents an RGBA value
      */
-    struct Block: Equatable {
+    public struct Block: Equatable {
         let r: Double
         let g: Double
         let b: Double

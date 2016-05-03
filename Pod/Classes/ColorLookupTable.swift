@@ -21,44 +21,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
+//  BlockGrid class and block struct are adapted from
+//  https://github.com/oxling/iphone-ascii/blob/master/ASCII/BlockGrid.h
+//
+
 import Foundation
 
-public class ASCIILookUpTable {
-    private let metrics: [Metric]
-    struct Metric {
-        let ascii: String
-        let luminance: Double
-        func description() -> String {
-            return "ascii: \(self.ascii) luminance: \(self.luminance) "
-        }
+public class ColorLookupTable: LookupTable {
+    // MARK: Properties
+
+
+    // MARK: Initialization
+
+
+    // MARK: LookupTable
+    public func lookup(luminance: BlockGrid.Block) -> String? {
+        return nil
     }
 
-    static let defaultMapping = [1.0: " ", 0.95: "`", 0.92: ".", 0.9: ",", 0.8: "-", 0.75: "~", 0.7: "+", 0.65: "<", 0.6: ">", 0.55: "o", 0.5: "=", 0.35: "*", 0.3: "%", 0.1: "X", 0.0: "@"]
-
-    convenience init() {
-        self.init(luminanceToStringMapping: ASCIILookUpTable.defaultMapping)
-    }
-
-    init(luminanceToStringMapping: [Double: String]) {
-        metrics = ASCIILookUpTable.buildDataFromMapping(luminanceToStringMapping)
-    }
-
-    func stringForLuminance(luminance: Double) -> String? {
-        let deltas = metrics.map{($0, abs($0.luminance - luminance))}
-        let closest = deltas.minElement{$0.1 < $1.1}
-        return closest?.0.ascii
-    }
-
-    private static func buildDataFromMapping(stringToLumMapping: [Double: String]) -> [Metric] {
-        var pairs = stringToLumMapping.map{($0,$1)}
-        pairs.sortInPlace{$0.1 < $1.1}
-        return pairs.map{Metric(ascii: $0.1,luminance: $0.0)}
-    }
-
-    func description() {
-        for m in metrics {
-            print("\(m)")
-        }
-    }
 }
-
