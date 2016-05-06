@@ -26,17 +26,70 @@
 //
 
 import Foundation
+import KDTree
+
+extension Color: KDTreePoint {
+    @nonobjc public static var dimensions: Int = 3
+    public func kdDimension(dimension: Int) -> Double {
+        let (r, g, b, a) = components()
+        switch dimension {
+        case 0:
+            return Double(r)
+        case 1:
+            return Double(g)
+        case 2:
+            return Double(b)
+        default:
+            return 0.0
+        }
+    }
+
+    public func squaredDistance(otherPoint: Color) -> Double {
+        let (r, g, b, a) = components()
+        let (or, og, ob, oa) = otherPoint.components()
+        return pow(r - or, 2) + pow(g - og, 2) + pow(b - ob, 2) + pow(a - oa, 2)
+    }
+    #if os(iOS)
+    private func components() -> (Double, Double, Double, Double) {
+        var red: CGFloat = 0.0
+        var green: CGFloat = 0.0
+        var blue: CGFloat = 0.0
+        var alpha: CGFloat = 0.0
+
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return (Double(red), Double(green), Double(blue), Double(alpha))
+    }
+    #elseif os(OSX)
+    private func components() -> (Double, Double, Double, Double) {
+        let color = colorUsingColorSpaceName(NSCalibratedRGBColorSpace)!
+        var red: CGFloat = 0.0
+        var green: CGFloat = 0.0
+        var blue: CGFloat = 0.0
+        var alpha: CGFloat = 0.0
+
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return (Double(red), Double(green), Double(blue), Double(alpha))
+    }
+    #endif
+}
+
 
 public class ColorLookupTable: LookupTable {
     // MARK: Properties
-
+    private let tree: KDTree<KDTreeEntry<Color, String>>
 
     // MARK: Initialization
-
+    init() {
+        let emojiList: [(String, Color)] = [("❤️", .redColor()) , ("😡", .orangeColor()), ("🌞", .yellowColor()), ("🍏", .greenColor()), ("🐌", .brownColor()), ("🔵", .blueColor()), ("👿", .purpleColor()), ("🌂", .magentaColor()), ("🐇", .whiteColor())]
+        let entries = emojiList.map{KDTreeEntry<Color, String>(key: $1, value: $0)}
+        tree = KDTree(values: entries)
+    }
 
     // MARK: LookupTable
-    public func lookup(luminance: BlockGrid.Block) -> String? {
-        return nil
+    public func lookup(block: BlockGrid.Block) -> String? {
+        let color = Color(colorLiteralRed: block.r, green: block.g, blue: block.b, alpha: block.a)
+        let nearest = tree.nearest(toElement: KDTreeEntry<Color, String>(key: color, value: ""))
+        return nearest?.value
     }
 
 }

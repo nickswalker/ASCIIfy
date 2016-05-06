@@ -40,7 +40,8 @@ class WindowController: NSWindowController {
         let bundle = NSBundle(forClass: self.dynamicType)
         let path = bundle.pathForResource("flower", ofType: "jpg")!
         let image = NSImage(contentsOfFile: path)!
-        fontSizeSlider.maxValue = Double(image.size.width) / 100.0
+        fontSizeSlider.maxValue = Double(image.size.width) / 50.0
+        fontSizeSlider.doubleValue = fontSizeSlider.maxValue
         viewController.inputImage = image
     }
 
@@ -74,7 +75,9 @@ class WindowController: NSWindowController {
             if result == NSFileHandlingPanelOKButton {
                 let url = openPanel.URLs[0]
                 let image = NSImage(contentsOfURL: url)
-                self.fontSizeSlider.maxValue = Double(image!.size.width) / 100.0
+
+                self.fontSizeSlider.maxValue = Double(image!.size.width) / 50.0
+                self.fontSizeSlider.doubleValue = self.fontSizeSlider.maxValue
                 self.viewController.inputImage = image
 
             }

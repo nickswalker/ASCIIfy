@@ -28,24 +28,17 @@
 import Foundation
 import KDTree
 
-private func ==(lhs: LuminanceEntry, rhs: LuminanceEntry) -> Bool {
-    return lhs.luminance == rhs.luminance && lhs.string == rhs.string
-}
 
-private struct LuminanceEntry: Equatable, KDTreePoint {
-    static var dimensions: Int = 1
-    let string: String
-    let luminance: Double
-    func description() -> String {
-        return "string: \(string) luminance: \(luminance) "
-    }
+
+extension Float: KDTreePoint {
+    public static var dimensions: Int = 1
     // MARK: KDTreePoint
-    private func squaredDistance(otherPoint: LuminanceEntry) -> Double {
-        return pow((luminance - otherPoint.luminance), 2)
+    public func squaredDistance(otherPoint: Float) -> Double {
+        return Double(pow(self - otherPoint, 2))
     }
 
-    private func kdDimension(dimension: Int) -> Double {
-        return luminance
+    public func kdDimension(dimension: Int) -> Double {
+        return Double(self)
     }
 }
 
@@ -53,9 +46,8 @@ private struct LuminanceEntry: Equatable, KDTreePoint {
 
 public class LuminanceLookupTable: LookupTable {
     // MARK: Properties
-    private let metrics: [LuminanceEntry]
     public var invertLuminance = true
-    private let tree: KDTree<LuminanceEntry>
+    private let tree: KDTree<KDTreeEntry<Float, String>>
 
 
     static let defaultMapping = [1.0: " ", 0.95: "`", 0.92: ".", 0.9: ",", 0.8: "-", 0.75: "~", 0.7: "+", 0.65: "<", 0.6: ">", 0.55: "o", 0.5: "=", 0.35: "*", 0.3: "%", 0.1: "X", 0.0: "@"]
@@ -66,24 +58,17 @@ public class LuminanceLookupTable: LookupTable {
     }
 
     init(luminanceToStringMapping: [Double: String]) {
-        metrics = luminanceToStringMapping.map{LuminanceEntry(string: $0.1,luminance: $0.0)}
-        tree = KDTree(values: metrics)
+        let entries = luminanceToStringMapping.map{KDTreeEntry<Float, String>(key: Float($0.0),value: $0.1)}
+        tree = KDTree(values: entries)
     }
 
     public func lookup(block: BlockGrid.Block) -> String? {
         let luminance = LuminanceLookupTable.luminance(block)
-        let nearest = tree.nearest(toElement: LuminanceEntry(string: "", luminance: luminance))
-        return nearest?.string
+        let nearest = tree.nearest(toElement: KDTreeEntry<Float, String>(key: luminance, value: ""))
+        return nearest?.value
     }
 
-
-    func description() {
-        for m in metrics {
-            print("\(m)")
-        }
-    }
-
-    public static func luminance(block: BlockGrid.Block, invert: Bool = false) -> Double {
+    public static func luminance(block: BlockGrid.Block, invert: Bool = false) -> Float {
         // See Wikipedia's article on relative luminance:
         // https://en.wikipedia.org/wiki/Relative_luminance
         var result = 0.2126 * block.r + 0.7152 * block.g + 0.0722 * block.b

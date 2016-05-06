@@ -21,8 +21,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-import Foundation
+//  BlockGrid class and block struct are adapted from
+//  https://github.com/oxling/iphone-ascii/blob/master/ASCII/BlockGrid.h
+//
 
-public protocol LookupTable {
-    func lookup(block: BlockGrid.Block) -> String?
+import Foundation
+import KDTree
+
+internal func == <K:KDTreePoint, V: Equatable>(lhs: KDTreeEntry<K,V>, rhs: KDTreeEntry<K,V>) -> Bool {
+    return lhs.value == rhs.value && lhs.key == rhs.key
+}
+
+internal struct KDTreeEntry<K:KDTreePoint, V: Equatable>: KDTreePoint  {
+    let key: K
+    let value: V
+
+    //MARK: KDTreePoint
+    @nonobjc static var dimensions: Int {
+        return K.dimensions
+    }
+    internal func kdDimension(dimension: Int) -> Double {
+        return key.kdDimension(dimension)
+    }
+    func squaredDistance(otherPoint: KDTreeEntry) -> Double {
+        return key.squaredDistance(otherPoint.key)
+    }
 }

@@ -47,10 +47,10 @@ public class BlockGrid {
      *  Represents an RGBA value
      */
     public struct Block: Equatable {
-        let r: Double
-        let g: Double
-        let b: Double
-        let a: Double
+        let r: Float
+        let g: Float
+        let b: Float
+        let a: Float
     }
 
     /**
@@ -92,10 +92,10 @@ public class BlockGrid {
         for row in 0..<height {
             for col in 0..<width {
                 let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
-                let r = Double(rawData[byteIndex]) / 255.0
-                let g = Double(rawData[byteIndex + 1]) / 255.0
-                let b = Double(rawData[byteIndex + 2]) / 255.0
-                let a = Double(rawData[byteIndex + 3]) / 255.0
+                let r = Float(rawData[byteIndex]) / 255.0
+                let g = Float(rawData[byteIndex + 1]) / 255.0
+                let b = Float(rawData[byteIndex + 2]) / 255.0
+                let a = Float(rawData[byteIndex + 3]) / 255.0
                 grid[row][col] = BlockGrid.Block(r: r, g: g, b: b, a: a)
             }
         }

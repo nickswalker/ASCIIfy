@@ -95,6 +95,7 @@ public class ASCIIConverter {
         let flipVertical = CGAffineTransformMake(
             1, 0, 0, -1, 0, ctxRect.size.height
         )
+        CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0));
         CGContextConcatCTM(ctx, flipVertical)
         #if os(iOS)
             var attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Color.blackColor()]
