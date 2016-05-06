@@ -26,18 +26,37 @@
 //
 
 import Foundation
+import KDTree
+
+private func ==(lhs: LuminanceEntry, rhs: LuminanceEntry) -> Bool {
+    return lhs.luminance == rhs.luminance && lhs.string == rhs.string
+}
+
+private struct LuminanceEntry: Equatable, KDTreePoint {
+    static var dimensions: Int = 1
+    let string: String
+    let luminance: Double
+    func description() -> String {
+        return "string: \(string) luminance: \(luminance) "
+    }
+    // MARK: KDTreePoint
+    private func squaredDistance(otherPoint: LuminanceEntry) -> Double {
+        return pow((luminance - otherPoint.luminance), 2)
+    }
+
+    private func kdDimension(dimension: Int) -> Double {
+        return luminance
+    }
+}
+
+
 
 public class LuminanceLookupTable: LookupTable {
     // MARK: Properties
-    private let metrics: [Metric]
+    private let metrics: [LuminanceEntry]
     public var invertLuminance = true
-    struct Metric {
-        let ascii: String
-        let luminance: Double
-        func description() -> String {
-            return "ascii: \(self.ascii) luminance: \(self.luminance) "
-        }
-    }
+    private let tree: KDTree<LuminanceEntry>
+
 
     static let defaultMapping = [1.0: " ", 0.95: "`", 0.92: ".", 0.9: ",", 0.8: "-", 0.75: "~", 0.7: "+", 0.65: "<", 0.6: ">", 0.55: "o", 0.5: "=", 0.35: "*", 0.3: "%", 0.1: "X", 0.0: "@"]
 
@@ -47,20 +66,16 @@ public class LuminanceLookupTable: LookupTable {
     }
 
     init(luminanceToStringMapping: [Double: String]) {
-        metrics = LuminanceLookupTable.buildDataFromMapping(luminanceToStringMapping)
+        metrics = luminanceToStringMapping.map{LuminanceEntry(string: $0.1,luminance: $0.0)}
+        tree = KDTree(values: metrics)
     }
 
     public func lookup(block: BlockGrid.Block) -> String? {
-        let deltas = metrics.map{($0, abs($0.luminance - LuminanceLookupTable.luminance(block, invert: invertLuminance)))}
-        let closest = deltas.minElement{$0.1 < $1.1}
-        return closest?.0.ascii
+        let luminance = LuminanceLookupTable.luminance(block)
+        let nearest = tree.nearest(toElement: LuminanceEntry(string: "", luminance: luminance))
+        return nearest?.string
     }
 
-    private static func buildDataFromMapping(stringToLumMapping: [Double: String]) -> [Metric] {
-        var pairs = stringToLumMapping.map{($0,$1)}
-        pairs.sortInPlace{$0.1 < $1.1}
-        return pairs.map{Metric(ascii: $0.1,luminance: $0.0)}
-    }
 
     func description() {
         for m in metrics {

@@ -55,7 +55,6 @@ public extension Image {
         converter.font = font
         converter.backgroundColor = bgColor
         converter.columns = columns
-        converter.invertLuminance = invertLuminance
         converter.colorMode = colorMode
         converter.convertImage(self) { handler($0) }
     }
