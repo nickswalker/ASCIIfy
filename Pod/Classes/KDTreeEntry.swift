@@ -21,42 +21,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
+//  BlockGrid class and block struct are adapted from
+//  https://github.com/oxling/iphone-ascii/blob/master/ASCII/BlockGrid.h
+//
 
 import Foundation
-#if os(iOS)
-    import UIKit
-#endif
+import KDTree
 
-public extension Image {
+internal func == <K:KDTreePoint, V: Equatable>(lhs: KDTreeEntry<K,V>, rhs: KDTreeEntry<K,V>) -> Bool {
+    return lhs.value == rhs.value && lhs.key == rhs.key
+}
 
-    func fy_asciiString() -> String {
-        let converter = ASCIIConverter()
-        return converter.convertToString(self)
+internal struct KDTreeEntry<K:KDTreePoint, V: Equatable>: KDTreePoint  {
+    let key: K
+    let value: V
+
+    //MARK: KDTreePoint
+    @nonobjc static var dimensions: Int {
+        return K.dimensions
     }
-
-    func fy_asciiStringWith(handler: StringHandler) {
-        let converter = ASCIIConverter()
-        converter.convertToString(self) { handler($0) }
+    internal func kdDimension(dimension: Int) -> Double {
+        return key.kdDimension(dimension)
     }
-    
-    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont) -> Image {
-        let converter = ASCIIConverter()
-        return converter.convertImage(self)
+    func squaredDistance(otherPoint: KDTreeEntry) -> Double {
+        return key.squaredDistance(otherPoint.key)
     }
-
-    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont, completionHandler handler: ImageHandler) {
-        let converter = ASCIIConverter()
-        converter.font = font
-        converter.convertImage(self) { handler($0)}
-    }
-
-    func fy_asciiImageWith(font: Font = ASCIIConverter.defaultFont, bgColor: Color = .blackColor(), columns: Int? = nil, invertLuminance: Bool = true, colorMode: ASCIIConverter.ColorMode = .Color, completionHandler handler: ImageHandler) {
-        let converter = ASCIIConverter()
-        converter.font = font
-        converter.backgroundColor = bgColor
-        converter.columns = columns
-        converter.colorMode = colorMode
-        converter.convertImage(self) { handler($0) }
-    }
-
 }

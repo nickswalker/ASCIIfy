@@ -28,7 +28,7 @@
 import Foundation
 import CoreGraphics
 
-func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
+public func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
     return lhs.a == rhs.a &&
         lhs.r == rhs.r &&
         lhs.g == rhs.g &&
@@ -38,7 +38,7 @@ func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
 /* BlockGrid is a wrapper around a buffer of block_t objects, which represent individual "pixels" in the
  ASCII art. Each block_t is just a list of CGFloat components, which can be used directly by Quartz. */
 
-class BlockGrid {
+public class BlockGrid {
     let width: Int
     let height: Int
     private var grid: [[Block]]
@@ -46,11 +46,11 @@ class BlockGrid {
     /**
      *  Represents an RGBA value
      */
-    struct Block: Equatable {
-        let r: Double
-        let g: Double
-        let b: Double
-        let a: Double
+    public struct Block: Equatable {
+        let r: Float
+        let g: Float
+        let b: Float
+        let a: Float
     }
 
     /**
@@ -92,10 +92,10 @@ class BlockGrid {
         for row in 0..<height {
             for col in 0..<width {
                 let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
-                let r = Double(rawData[byteIndex]) / 255.0
-                let g = Double(rawData[byteIndex + 1]) / 255.0
-                let b = Double(rawData[byteIndex + 2]) / 255.0
-                let a = Double(rawData[byteIndex + 3]) / 255.0
+                let r = Float(rawData[byteIndex]) / 255.0
+                let g = Float(rawData[byteIndex + 1]) / 255.0
+                let b = Float(rawData[byteIndex + 2]) / 255.0
+                let a = Float(rawData[byteIndex + 3]) / 255.0
                 grid[row][col] = BlockGrid.Block(r: r, g: g, b: b, a: a)
             }
         }

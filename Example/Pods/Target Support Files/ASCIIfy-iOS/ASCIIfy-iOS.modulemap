@@ -1,6 +1,0 @@
-framework module ASCIIfy {
-  umbrella header "ASCIIfy-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}

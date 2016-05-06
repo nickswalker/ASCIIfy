@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ASCIIfy"
-  s.version          = "0.2.0"
+  s.version          = "0.3.0"
   s.summary          = "UIImage/NSImage to ASCII art"
   s.description      = <<-DESC
 Includes UIImage and NSImage extensions. String and image output available.
@@ -11,7 +11,7 @@ Includes UIImage and NSImage extensions. String and image output available.
   s.license          = 'MIT'
   s.author           = { "Nick Walker" => "nick@nickwalker.us" }
   s.source           = { :git => "https://github.com/nickswalker/ASCIIfy.git", :tag => s.version.to_s }
-
+  s.dependency "KDTree"  
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.11'
 
