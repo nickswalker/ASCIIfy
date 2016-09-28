@@ -31,7 +31,7 @@ class TestASCIIConverter: XCTestCase {
     var asymmetricChecker: Image!
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
 
         basicChecker = {
             let fileLocation = bundle.pathForResource("checker-2", ofType: "png")!
@@ -83,7 +83,7 @@ class TestASCIIConverter: XCTestCase {
 
     func testImageConversionPerformance() {
         let converter = ASCIIConverter()
-        measureBlock {
+        measure {
             let result = converter.convertImage(self.largeChecker)
             XCTAssertEqual(result.size, self.largeChecker.size)
         }
@@ -92,7 +92,7 @@ class TestASCIIConverter: XCTestCase {
 
     func testStringConversionPerformance() {
         let converter = ASCIIConverter()
-        measureBlock {
+        measure {
             let _ = converter.convertToString(self.largeChecker)
         }
 

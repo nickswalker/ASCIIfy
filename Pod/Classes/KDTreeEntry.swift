@@ -40,10 +40,10 @@ internal struct KDTreeEntry<K:KDTreePoint, V: Equatable>: KDTreePoint  {
     @nonobjc static var dimensions: Int {
         return K.dimensions
     }
-    internal func kdDimension(dimension: Int) -> Double {
+    internal func kdDimension(_ dimension: Int) -> Double {
         return key.kdDimension(dimension)
     }
-    func squaredDistance(otherPoint: KDTreeEntry) -> Double {
-        return key.squaredDistance(otherPoint.key)
+    func squaredDistance(to otherPoint: KDTreeEntry) -> Double {
+        return key.squaredDistance(to: otherPoint.key)
     }
 }

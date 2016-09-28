@@ -38,10 +38,10 @@ public func == (lhs: BlockGrid.Block, rhs: BlockGrid.Block) -> Bool {
 /* BlockGrid is a wrapper around a buffer of block_t objects, which represent individual "pixels" in the
  ASCII art. Each block_t is just a list of CGFloat components, which can be used directly by Quartz. */
 
-public class BlockGrid {
+open class BlockGrid {
     let width: Int
     let height: Int
-    private var grid: [[Block]]
+    fileprivate var grid: [[Block]]
 
     /**
      *  Represents an RGBA value
@@ -62,7 +62,7 @@ public class BlockGrid {
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
-        grid = [[Block]](count: height, repeatedValue: [Block](count: width, repeatedValue: Block(r: 0.0, g: 0.0, b: 0.0, a: 0.0)))
+        grid = [[Block]](repeating: [Block](repeating: Block(r: 0.0, g: 0.0, b: 0.0, a: 0.0), count: width), count: height)
     }
 
     convenience init(image: Image) {
@@ -77,18 +77,18 @@ public class BlockGrid {
      - returns: grid of pixels
      */
     convenience init(image: CGImage) {
-        let width = CGImageGetWidth(image)
-        let height = CGImageGetHeight(image)
+        let width = image.width
+        let height = image.height
         self.init(width: width, height: height)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let rawData = UnsafeMutablePointer<UInt8>(malloc(height * width * 4))
+        let rawData = UnsafeMutablePointer<UInt8>.allocate(capacity: height * width * 4)
         let bytesPerPixel = 4
         let bytesPerRow = bytesPerPixel * width
         let bitsPerComponent = 8
 
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Big.rawValue)
-        let context = CGBitmapContextCreate(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
-        CGContextDrawImage(context, CGRect(x: 0, y: 0, width: width, height: height), image)
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+        let context = CGContext(data: rawData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+        context?.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
         for row in 0..<height {
             for col in 0..<width {
                 let byteIndex = (bytesPerRow * row) + col * bytesPerPixel
@@ -116,8 +116,8 @@ extension BlockGrid {
 
      - returns: 2D array of transformed values
      */
-    func map<T>(transformation: Block -> T) -> [[T]] {
-        var result = [[T]](count: grid.count, repeatedValue: [T]())
+    func map<T>(_ transformation: (Block) -> T) -> [[T]] {
+        var result = [[T]](repeating: [T](), count: grid.count)
         for row in 0..<height {
             for col in 0..<width {
                 result[row].append(transformation(grid[row][col]))
@@ -131,7 +131,7 @@ extension BlockGrid {
 
      - parameter transformation: closure to apply to each block
      */
-    func forEach(transformation: Block -> Block) {
+    func forEach(_ transformation: (Block) -> Block) {
         for row in 0..<height {
             for col in 0..<width {
                 grid[row][col] = transformation(grid[row][col])

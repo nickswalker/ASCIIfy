@@ -43,19 +43,19 @@ class ViewController: NSViewController {
         }
     }
 
-    var colorMode: ASCIIConverter.ColorMode = .Color {
+    var colorMode: ASCIIConverter.ColorMode = .color {
         didSet(oldValue) {
             processInput()
         }
     }
 
-    private var outputImage: CGImage? {
+    fileprivate var outputImage: CGImage? {
         didSet(oldValue) {
             self.imageView.setImage(outputImage, imageProperties: [:])
         }
     }
 
-    private var displayingOutput = true {
+    fileprivate var displayingOutput = true {
         didSet(oldValue) {
             if displayingOutput {
                 self.imageView.setImage(outputImage, imageProperties: [:])
@@ -66,7 +66,7 @@ class ViewController: NSViewController {
         }
     }
 
-    private func processInput() {
+    fileprivate func processInput() {
         let font = NSFont(name: ASCIIConverter.defaultFont.fontName, size: fontSize)!
         inputImage?.fy_asciiImageWith(font, colorMode: colorMode){
             asciified in
@@ -75,12 +75,12 @@ class ViewController: NSViewController {
         }
     }
 
-    private func toCGImage(image: NSImage) -> CGImage {
-        var rect = NSRect(origin: CGPointZero, size: image.size)
-        return image.CGImageForProposedRect(&rect, context: nil, hints: nil)!
+    fileprivate func toCGImage(_ image: NSImage) -> CGImage {
+        var rect = NSRect(origin: CGPoint.zero, size: image.size)
+        return image.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
     }
 
-    @IBAction func didClickView(sender: NSClickGestureRecognizer) {
+    @IBAction func didClickView(_ sender: NSClickGestureRecognizer) {
         displayingOutput = !displayingOutput
     }
 
