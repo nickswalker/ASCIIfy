@@ -24,8 +24,9 @@ env:
 
 
 before_install:
-  - sudo gem install -n /usr/local/bin cocoapods
+  - sudo gem install activesupport -v 4.2.6
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
+
 script:
   - set -o pipefail
   - xcodebuild -version
