@@ -33,42 +33,42 @@ import KDTree
 extension Float: KDTreePoint {
     public static var dimensions: Int = 1
     // MARK: KDTreePoint
-    public func squaredDistance(otherPoint: Float) -> Double {
+    public func squaredDistance(to otherPoint: Float) -> Double {
         return Double(pow(self - otherPoint, 2))
     }
 
-    public func kdDimension(dimension: Int) -> Double {
+    public func kdDimension(_ dimension: Int) -> Double {
         return Double(self)
     }
 }
 
 
 
-public class LuminanceLookupTable: LookupTable {
+open class LuminanceLookupTable: LookupTable {
     // MARK: Properties
-    public var invertLuminance = true
-    private let tree: KDTree<KDTreeEntry<Float, String>>
+    open var invertLuminance = true
+    fileprivate let tree: KDTree<KDTreeEntry<Float, String>>
 
 
     static let defaultMapping = [1.0: " ", 0.95: "`", 0.92: ".", 0.9: ",", 0.8: "-", 0.75: "~", 0.7: "+", 0.65: "<", 0.6: ">", 0.55: "o", 0.5: "=", 0.35: "*", 0.3: "%", 0.1: "X", 0.0: "@"]
 
     // MARK: Initialization
-    convenience init() {
+    public convenience init() {
         self.init(luminanceToStringMapping: LuminanceLookupTable.defaultMapping)
     }
 
-    init(luminanceToStringMapping: [Double: String]) {
+    public init(luminanceToStringMapping: [Double: String]) {
         let entries = luminanceToStringMapping.map{KDTreeEntry<Float, String>(key: Float($0.0),value: $0.1)}
         tree = KDTree(values: entries)
     }
 
-    public func lookup(block: BlockGrid.Block) -> String? {
-        let luminance = LuminanceLookupTable.luminance(block)
+    open func lookup(_ block: BlockGrid.Block) -> String? {
+        let luminance = LuminanceLookupTable.luminance(block, invert: invertLuminance)
         let nearest = tree.nearest(toElement: KDTreeEntry<Float, String>(key: luminance, value: ""))
         return nearest?.value
     }
 
-    public static func luminance(block: BlockGrid.Block, invert: Bool = false) -> Float {
+    open static func luminance(_ block: BlockGrid.Block, invert: Bool = false) -> Float {
         // See Wikipedia's article on relative luminance:
         // https://en.wikipedia.org/wiki/Relative_luminance
         var result = 0.2126 * block.r + 0.7152 * block.g + 0.0722 * block.b

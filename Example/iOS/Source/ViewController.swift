@@ -31,21 +31,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var fontSizeLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    private var imagePicker: UIImagePickerController?
-    private var inputImage: UIImage?
-    private var outputImage: UIImage? {
+    fileprivate var imagePicker: UIImagePickerController?
+    fileprivate var inputImage: UIImage?
+    fileprivate var outputImage: UIImage? {
         didSet(oldValue) {
             if displayingOutput {
                 imageView.image = outputImage
             }
         }
     }
-    private var colorMode: ASCIIConverter.ColorMode = .Color {
+    fileprivate var colorMode: ASCIIConverter.ColorMode = .color {
         didSet(oldValue) {
             processInput()
         }
     }
-    private var displayingOutput = true {
+    fileprivate var displayingOutput = true {
         didSet(oldValue){
             if displayingOutput {
                 imageView.image = outputImage
@@ -58,21 +58,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Configure demo image
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("flower", ofType: "jpg")!
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "flower", ofType: "jpg")!
         inputImage = UIImage(contentsOfFile: path)
         processInput()
         fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         inputImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        imagePicker?.dismissViewControllerAnimated(true, completion: nil)
+        imagePicker?.dismiss(animated: true, completion: nil)
         processInput()
     }
 
-    private func processInput() {
-        let font = ASCIIConverter.defaultFont.fontWithSize(CGFloat(fontSizeSlider.value))
+    fileprivate func processInput() {
+        let font = ASCIIConverter.defaultFont.withSize(CGFloat(fontSizeSlider.value))
         activityIndicator.startAnimating()
         inputImage?.fy_asciiImageWith(font, colorMode: colorMode) { image in
             self.activityIndicator.stopAnimating()
@@ -83,48 +83,48 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     // MARK: Interaction
 
-    @IBAction func pickNewImage(sender: UIBarButtonItem) {
+    @IBAction func pickNewImage(_ sender: UIBarButtonItem) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
-        picker.sourceType = .PhotoLibrary
+        picker.sourceType = .photoLibrary
         self.imagePicker = picker
-        presentViewController(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
 
-    @IBAction func didShare(sender: UIBarButtonItem) {
+    @IBAction func didShare(_ sender: UIBarButtonItem) {
         guard let outputImage = outputImage else {
             return
         }
         let controller = UIActivityViewController(activityItems: [outputImage], applicationActivities: nil)
-        presentViewController(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
 
-    @IBAction func didPressDown(sender: UIButton) {
+    @IBAction func didPressDown(_ sender: UIButton) {
         displayingOutput = false
     }
 
-    @IBAction func didRelease(sender: UIButton) {
+    @IBAction func didRelease(_ sender: UIButton) {
         displayingOutput = true
     }
 
-    @IBAction func fontSizeChanged(sender: UISlider) {
+    @IBAction func fontSizeChanged(_ sender: UISlider) {
         fontSizeLabel.text = "\(Int(fontSizeSlider.value))"
         processInput()
     }
 
     // MARK: Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "options" {
-            let navController = (segue.destinationViewController as? UINavigationController)
+            let navController = (segue.destination as? UINavigationController)
             let optionsController = navController?.childViewControllers[0] as? OptionsController
             optionsController?.modeChangeHandler = { self.colorMode = $0}
             optionsController?.mode = colorMode
         }
     }
 
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+    @IBAction func prepareForUnwind(_ segue: UIStoryboardSegue) {
 
     }
 

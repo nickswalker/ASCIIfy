@@ -34,23 +34,24 @@ public extension Image {
         return converter.convertToString(self)
     }
 
-    func fy_asciiStringWith(handler: StringHandler) {
+    func fy_asciiStringWith(_ handler: @escaping StringHandler) {
         let converter = ASCIIConverter()
         converter.convertToString(self) { handler($0) }
     }
     
-    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont) -> Image {
+    func fy_asciiImage(_ font: Font = ASCIIConverter.defaultFont) -> Image {
         let converter = ASCIIConverter()
+        converter.font = font
         return converter.convertImage(self)
     }
 
-    func fy_asciiImage(font: Font = ASCIIConverter.defaultFont, completionHandler handler: ImageHandler) {
+    func fy_asciiImage(_ font: Font = ASCIIConverter.defaultFont, completionHandler handler: @escaping ImageHandler) {
         let converter = ASCIIConverter()
         converter.font = font
         converter.convertImage(self) { handler($0)}
     }
 
-    func fy_asciiImageWith(font: Font = ASCIIConverter.defaultFont, bgColor: Color = .blackColor(), columns: Int? = nil, invertLuminance: Bool = true, colorMode: ASCIIConverter.ColorMode = .Color, completionHandler handler: ImageHandler) {
+    func fy_asciiImageWith(_ font: Font = ASCIIConverter.defaultFont, bgColor: Color = .black, columns: Int? = nil, invertLuminance: Bool = true, colorMode: ASCIIConverter.ColorMode = .color, completionHandler handler: @escaping ImageHandler) {
         let converter = ASCIIConverter()
         converter.font = font
         converter.backgroundColor = bgColor

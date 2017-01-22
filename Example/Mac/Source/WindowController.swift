@@ -37,44 +37,44 @@ class WindowController: NSWindowController {
     override func windowDidLoad() {
         // Configure demo image
 
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("flower", ofType: "jpg")!
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "flower", ofType: "jpg")!
         let image = NSImage(contentsOfFile: path)!
         fontSizeSlider.maxValue = Double(image.size.width) / 50.0
         fontSizeSlider.doubleValue = fontSizeSlider.maxValue
         viewController.inputImage = image
     }
 
-    @IBAction func didChangeFontSize(sender: NSSlider) {
+    @IBAction func didChangeFontSize(_ sender: NSSlider) {
         let fontSize = CGFloat(sender.floatValue)
         viewController.fontSize = fontSize
     }
 
-    @IBAction func didChangeColorMode(sender: NSSegmentedControl) {
+    @IBAction func didChangeColorMode(_ sender: NSSegmentedControl) {
         let selected = sender.selectedSegment
         let mode: ASCIIConverter.ColorMode = {
             switch selected {
             case 1:
-                return ASCIIConverter.ColorMode.GrayScale
+                return ASCIIConverter.ColorMode.grayScale
             case 2:
-                return ASCIIConverter.ColorMode.BlackAndWhite
+                return ASCIIConverter.ColorMode.blackAndWhite
             default:
-                return ASCIIConverter.ColorMode.Color
+                return ASCIIConverter.ColorMode.color
             }
         }()
         viewController.colorMode = mode
     }
 
-    func openDocument(sender: NSMenuItem) {
+    func openDocument(_ sender: NSMenuItem) {
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
         openPanel.message = "Select an image"
-        openPanel.beginSheetModalForWindow(window!) { result in
+        openPanel.beginSheetModal(for: window!) { result in
             if result == NSFileHandlingPanelOKButton {
-                let url = openPanel.URLs[0]
-                let image = NSImage(contentsOfURL: url)
+                let url = openPanel.urls[0]
+                let image = NSImage(contentsOf: url)
 
                 self.fontSizeSlider.maxValue = Double(image!.size.width) / 50.0
                 self.fontSizeSlider.doubleValue = self.fontSizeSlider.maxValue

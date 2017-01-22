@@ -29,9 +29,9 @@ class TestImageUtilities: XCTestCase {
     var largeChecker: Image!
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         largeChecker = {
-            let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-1024", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
             }()
@@ -50,8 +50,8 @@ class TestImageUtilities: XCTestCase {
 
     func testToCGImagePreservesSize() {
         let result = largeChecker.toCGImage
-        XCTAssertEqual(CGFloat(CGImageGetWidth(result)), largeChecker.size.width)
-        XCTAssertEqual(CGFloat(CGImageGetHeight(result)), largeChecker.size.width)
+        XCTAssertEqual(CGFloat(result.width), largeChecker.size.width)
+        XCTAssertEqual(CGFloat(result.height), largeChecker.size.width)
     }
     
 }

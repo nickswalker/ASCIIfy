@@ -31,7 +31,7 @@ import Foundation
     import UIKit
 #endif
 
-internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGImage {
+internal func downscaleImage(_ image: Image, withFactor scaleFactor: Int) -> CGImage {
     var scaleFactor = CGFloat(scaleFactor)
     if scaleFactor <= 1 {
         return image.toCGImage
@@ -42,31 +42,31 @@ internal func downscaleImage(image: Image, withFactor scaleFactor: Int) -> CGIma
     let cgImage = image.toCGImage
     let ratio = scaleFactor / image.size.width
     let size = CGSize(width: scaleFactor, height: ratio * image.size.height)
-    let rect = CGRect(origin: CGPointZero, size: size)
-    let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
-    let bytesPerRow = CGImageGetBytesPerRow(cgImage)
-    let colorSpace = CGImageGetColorSpace(cgImage)
-    let bitmapInfo = CGImageGetBitmapInfo(cgImage)
+    let rect = CGRect(origin: CGPoint.zero, size: size)
+    let bitsPerComponent = cgImage.bitsPerComponent
+    let bytesPerRow = cgImage.bytesPerRow
+    let colorSpace = cgImage.colorSpace
+    let bitmapInfo = cgImage.bitmapInfo
 
-    let context = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)
+    let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace!, bitmapInfo: bitmapInfo.rawValue)
 
-    CGContextSetInterpolationQuality(context, .High)
+    context!.interpolationQuality = .high
 
-    CGContextDrawImage(context, rect, cgImage)
+    context?.draw(cgImage, in: rect)
 
-    let result = CGBitmapContextCreateImage(context)!
-    assert(CGFloat(CGImageGetWidth(result)) == scaleFactor)
-    return result
+    let result = context?.makeImage()!
+    assert(CGFloat((result?.width)!) == scaleFactor)
+    return result!
 }
 
 
 internal extension CGImage {
     func toImage() -> Image {
         #if os(OSX)
-            let size = CGSize(width: CGImageGetWidth(self), height: CGImageGetHeight(self))
-            return NSImage(CGImage: self, size: size)
+            let size = CGSize(width: self.width, height: self.height)
+            return NSImage(cgImage: self, size: size)
         #elseif os(iOS)
-            return UIImage(CGImage: self)
+            return UIImage(cgImage: self)
         #endif
     }
 }
@@ -74,15 +74,15 @@ internal extension CGImage {
 #if os(OSX)
 internal extension NSImage {
     var toCGImage: CGImage {
-            var rect = NSRect(origin: CGPointZero, size: self.size)
-            return CGImageForProposedRect(&rect, context: nil, hints: nil)!
+            var rect = NSRect(origin: CGPoint.zero, size: self.size)
+            return cgImage(forProposedRect: &rect, context: nil, hints: nil)!
     }
 }
 #elseif os(iOS)
     typealias CoreGraphicsImage = CGImage
 internal extension UIImage {
     var toCGImage: CoreGraphicsImage {
-        return CGImage!
+        return self.cgImage!
     }
 }
 #endif

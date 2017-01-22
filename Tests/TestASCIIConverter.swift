@@ -31,20 +31,20 @@ class TestASCIIConverter: XCTestCase {
     var asymmetricChecker: Image!
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
 
         basicChecker = {
-            let fileLocation = bundle.pathForResource("checker-2", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-2", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
         largeChecker = {
-            let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-1024", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
         asymmetricChecker = {
-            let fileLocation = bundle.pathForResource("asymmetric-checker-2", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "asymmetric-checker-2", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
             }()
@@ -56,22 +56,25 @@ class TestASCIIConverter: XCTestCase {
     }
     
     func testBasicChecker() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = true
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = true
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "@   \n  @ \n")
     }
 
     func testBasicCheckerInverse() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = false
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = false
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "  @ \n@   \n")
     }
 
     func testThatImageOrientationIsNotChanged() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = false
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = false
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(asymmetricChecker)
         XCTAssertEqual(result, "  @ \n<   \n")
     }
@@ -81,9 +84,13 @@ class TestASCIIConverter: XCTestCase {
         XCTAssertEqual(result.size, largeChecker.size)
     }
 
+    func testSurvivesLargeFontSize() {
+        let result = largeChecker.fy_asciiImage(font: ASCIIConverter.defaultFont.withSize(1000.0))
+    }
+
     func testImageConversionPerformance() {
         let converter = ASCIIConverter()
-        measureBlock {
+        measure {
             let result = converter.convertImage(self.largeChecker)
             XCTAssertEqual(result.size, self.largeChecker.size)
         }
@@ -92,7 +99,7 @@ class TestASCIIConverter: XCTestCase {
 
     func testStringConversionPerformance() {
         let converter = ASCIIConverter()
-        measureBlock {
+        measure {
             let _ = converter.convertToString(self.largeChecker)
         }
 

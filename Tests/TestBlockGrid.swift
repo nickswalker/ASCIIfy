@@ -29,9 +29,9 @@ class TestBlockGrid: XCTestCase {
     var largeChecker: Image!
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         largeChecker = {
-            let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-1024", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
             }()
@@ -53,7 +53,7 @@ class TestBlockGrid: XCTestCase {
     }
 
     func testConstructionFromImagePerformance() {
-        measureBlock { 
+        measure { 
             let _ = BlockGrid(image: self.largeChecker)
         }
     }

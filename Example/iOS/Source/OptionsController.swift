@@ -31,48 +31,48 @@ class OptionsController: UITableViewController {
 
     @IBOutlet var modeControl: UISegmentedControl!
 
-    var mode: ASCIIConverter.ColorMode = .Color
+    var mode: ASCIIConverter.ColorMode = .color
 
     var modeChangeHandler: ((ASCIIConverter.ColorMode) -> Void)?
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         setSelectedMode(mode)
     }
 
-    private func setSelectedMode(mode: ASCIIConverter.ColorMode) {
+    fileprivate func setSelectedMode(_ mode: ASCIIConverter.ColorMode) {
         modeControl.selectedSegmentIndex = {
             switch mode {
-            case .Color:
+            case .color:
                 return 0
-            case .GrayScale:
+            case .grayScale:
                 return 1
-            case .BlackAndWhite:
+            case .blackAndWhite:
                 return 2
             }
             }()
     }
 
-    @IBAction func didChangeModeSelection(sender: UISegmentedControl) {
+    @IBAction func didChangeModeSelection(_ sender: UISegmentedControl) {
         let mode: ASCIIConverter.ColorMode = {
             switch sender.selectedSegmentIndex {
             case 0:
-                return .Color
+                return .color
             case 1:
-                return .GrayScale
+                return .grayScale
             case 2:
-                return .BlackAndWhite
+                return .blackAndWhite
             default:
-                return .Color
+                return .color
             }
         }()
         modeChangeHandler?(mode)
     }
 
-    @IBAction func didChangeBackgroundColor(sender: UIControl) {
+    @IBAction func didChangeBackgroundColor(_ sender: UIControl) {
 
     }
 
     @IBAction func dismiss() {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

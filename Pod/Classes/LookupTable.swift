@@ -24,5 +24,5 @@
 import Foundation
 
 public protocol LookupTable {
-    func lookup(block: BlockGrid.Block) -> String?
+    func lookup(_ block: BlockGrid.Block) -> String?
 }
