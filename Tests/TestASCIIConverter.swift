@@ -85,7 +85,7 @@ class TestASCIIConverter: XCTestCase {
     }
 
     func testSurvivesLargeFontSize() {
-        let result = largeChecker.fy_asciiImage(font: ASCIIConverter.defaultFont.withSize(1000.0))
+        _ = largeChecker.fy_asciiImage(ASCIIConverter.defaultFont.withSize(500.0))
     }
 
     func testImageConversionPerformance() {
