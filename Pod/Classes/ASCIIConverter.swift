@@ -28,6 +28,12 @@ import Foundation
     public typealias Font = NSFont
     public typealias Image = NSImage
     public typealias Color = NSColor
+
+    public extension NSFont {
+        public func withSize(_ size: Float) -> NSFont {
+            return NSFont(name: self.fontName, size: CGFloat(size))!
+        }
+    }
 #elseif os(iOS)
     import UIKit
     public typealias Font = UIFont
@@ -44,7 +50,7 @@ open class ASCIIConverter {
     open static var defaultFont = Font(name: "Courier", size: 12.0)!
     open var font = ASCIIConverter.defaultFont
     open var backgroundColor = Color.clear
-    var columns: Int?
+    open var columns: Int?
     open var colorMode = ColorMode.color
     fileprivate func gridWidth(_ width: Int) -> Int {
         if columns ?? 0 <= 0 {
@@ -82,7 +88,7 @@ open class ASCIIConverter {
     }
     #endif
 
-    fileprivate func stringsAndColorsToContext(_ data: [[(String, Color)]], size: CGSize, bgColor: Color, opaque: Bool) -> Image {
+    fileprivate func stringsAndColorsToContext(_ data: [[(String, Color)]], size: CGSize, bgColor: Color, font: Font) -> Image {
         // Setup background
         let ctxRect = CGRect(origin: CGPoint.zero, size: size)
 
@@ -103,12 +109,10 @@ open class ASCIIConverter {
             var attributes: [AnyHashable: Any] = [kCTFontAttributeName as AnyHashable: font, kCTForegroundColorAttributeName as AnyHashable: NSColor.black.cgColor]
         #endif
 
-        if opaque {
-            ctx?.setFillColor(bgColor.cgColor)
-            ctx?.fill(ctxRect)
-        } else {
-            ctx?.clear(ctxRect)
-        }
+
+        ctx?.setFillColor(bgColor.cgColor)
+        ctx?.fill(ctxRect)
+
 
         let height = data.count
         let width = data[0].count
@@ -159,7 +163,6 @@ public extension ASCIIConverter {
     }
 
     func convertImage(_ image: Image, withFont font: Font, bgColor: Color, columns: Int, colorMode: ColorMode) -> Image {
-        let opaque = !isTransparent()
         let downscaled = downscaleImage(image, withFactor: columns)
         let pixelGrid = BlockGrid(image: downscaled)
 
@@ -179,7 +182,7 @@ public extension ASCIIConverter {
         if colorMode == .blackAndWhite {
             bgColor = .white
         }
-        return stringsAndColorsToContext(result, size: image.size, bgColor: bgColor, opaque: opaque)
+        return stringsAndColorsToContext(result, size: image.size, bgColor: bgColor, font: font)
 
     }
 

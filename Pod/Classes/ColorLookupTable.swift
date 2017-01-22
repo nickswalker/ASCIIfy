@@ -79,7 +79,7 @@ open class ColorLookupTable: LookupTable {
     fileprivate let tree: KDTree<KDTreeEntry<Color, String>>
 
     // MARK: Initialization
-    init() {
+    public init() {
         let emojiList: [(String, Color)] = [("❤️", .red) , ("😡", .orange), ("🌞", .yellow), ("🍏", .green), ("🐌", .brown), ("🔵", .blue), ("👿", .purple), ("🌂", .magenta), ("🐇", .white)]
         let entries = emojiList.map{KDTreeEntry<Color, String>(key: $1, value: $0)}
         tree = KDTree(values: entries)

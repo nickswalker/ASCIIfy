@@ -41,6 +41,7 @@ public extension Image {
     
     func fy_asciiImage(_ font: Font = ASCIIConverter.defaultFont) -> Image {
         let converter = ASCIIConverter()
+        converter.font = font
         return converter.convertImage(self)
     }
 

@@ -92,6 +92,7 @@
 		D43B351F1CC47A0C00134D3B /* checker-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checker-1024.png"; sourceTree = "<group>"; };
 		D46F96DA1CC9B03200355315 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowController.swift; path = Source/WindowController.swift; sourceTree = "<group>"; };
 		D4B99BD11CCDE4220027B78F /* asymmetric-checker-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "asymmetric-checker-2.png"; sourceTree = "<group>"; };
+		D4C1A7E11E34572C002C6A42 /* ASCIIfyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ASCIIfyPlayground.playground; sourceTree = "<group>"; };
 		D4C1B3FD1CCFE42500975AE1 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = iOS/Resources/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		D4C1B3FE1CCFE42500975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/Resources/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		D4C1B4011CCFE44600975AE1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Resources/Main.storyboard; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				D4C1A7E11E34572C002C6A42 /* ASCIIfyPlayground.playground */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ASCIIfy */,
 				D43A8CF21CC6CFD600CB94D2 /* Example for ASCIIfy (Mac) */,
