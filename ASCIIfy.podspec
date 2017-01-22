@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ASCIIfy"
-  s.version          = "0.3.1"
+  s.version          = "0.3.0"
   s.summary          = "UIImage/NSImage to ASCII art"
   s.description      = <<-DESC
 Includes UIImage and NSImage extensions. String and image output available.
