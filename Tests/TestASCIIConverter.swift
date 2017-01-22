@@ -34,17 +34,17 @@ class TestASCIIConverter: XCTestCase {
         let bundle = Bundle(for: type(of: self))
 
         basicChecker = {
-            let fileLocation = bundle.pathForResource("checker-2", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-2", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
         largeChecker = {
-            let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-1024", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
         }()
         asymmetricChecker = {
-            let fileLocation = bundle.pathForResource("asymmetric-checker-2", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "asymmetric-checker-2", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
             }()
@@ -56,22 +56,25 @@ class TestASCIIConverter: XCTestCase {
     }
     
     func testBasicChecker() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = true
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = true
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "@   \n  @ \n")
     }
 
     func testBasicCheckerInverse() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = false
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = false
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(basicChecker)
         XCTAssertEqual(result, "  @ \n@   \n")
     }
 
     func testThatImageOrientationIsNotChanged() {
-        let converter = ASCIIConverter()
-        converter.invertLuminance = false
+        let lut = LuminanceLookupTable()
+        lut.invertLuminance = false
+        let converter = ASCIIConverter(lut: lut)
         let result = converter.convertToString(asymmetricChecker)
         XCTAssertEqual(result, "  @ \n<   \n")
     }

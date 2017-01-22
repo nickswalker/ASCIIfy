@@ -72,7 +72,7 @@ open class ASCIIConverter {
     }
 
     #if os(iOS)
-    private func configureAttributes(attributes: inout [String: Any], color: Color) {
+    private func configureAttributes(_ attributes: inout [String: Any], color: Color) {
         attributes[NSForegroundColorAttributeName] = color
     }
 
@@ -138,7 +138,7 @@ open class ASCIIConverter {
 public extension ASCIIConverter {
 
     func convertImage(_ input: Image, completionHandler handler: @escaping ImageHandler) {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(qos: DispatchQoS.userInitiated.qosClass).async {
             let gridWidth = self.gridWidth(Int(input.size.width))
             let output = self.convertImage(input, withFont: self.font, bgColor: self.backgroundColor, columns: gridWidth, colorMode: self.colorMode)
             DispatchQueue.main.async { handler(output) }
@@ -146,7 +146,7 @@ public extension ASCIIConverter {
     }
 
     func convertToString(_ input: Image, completionHandler handler: @escaping StringHandler) {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
+        DispatchQueue.global(qos: DispatchQoS.userInitiated.qosClass).async(execute: {
             let output = self.convertToString(input)
             DispatchQueue.main.async(execute: { handler(output) })
         })

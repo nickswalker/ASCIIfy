@@ -31,7 +31,7 @@ import KDTree
 extension Color: KDTreePoint {
     @nonobjc public static var dimensions: Int = 3
     public func kdDimension(_ dimension: Int) -> Double {
-        let (r, g, b, a) = components()
+        let (r, g, b, _) = components()
         switch dimension {
         case 0:
             return Double(r)

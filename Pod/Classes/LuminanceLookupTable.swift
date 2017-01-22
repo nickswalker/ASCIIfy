@@ -53,17 +53,17 @@ open class LuminanceLookupTable: LookupTable {
     static let defaultMapping = [1.0: " ", 0.95: "`", 0.92: ".", 0.9: ",", 0.8: "-", 0.75: "~", 0.7: "+", 0.65: "<", 0.6: ">", 0.55: "o", 0.5: "=", 0.35: "*", 0.3: "%", 0.1: "X", 0.0: "@"]
 
     // MARK: Initialization
-    convenience init() {
+    public convenience init() {
         self.init(luminanceToStringMapping: LuminanceLookupTable.defaultMapping)
     }
 
-    init(luminanceToStringMapping: [Double: String]) {
+    public init(luminanceToStringMapping: [Double: String]) {
         let entries = luminanceToStringMapping.map{KDTreeEntry<Float, String>(key: Float($0.0),value: $0.1)}
         tree = KDTree(values: entries)
     }
 
     open func lookup(_ block: BlockGrid.Block) -> String? {
-        let luminance = LuminanceLookupTable.luminance(block)
+        let luminance = LuminanceLookupTable.luminance(block, invert: invertLuminance)
         let nearest = tree.nearest(toElement: KDTreeEntry<Float, String>(key: luminance, value: ""))
         return nearest?.value
     }

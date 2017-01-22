@@ -31,7 +31,7 @@ class TestBlockGrid: XCTestCase {
         super.setUp()
         let bundle = Bundle(for: type(of: self))
         largeChecker = {
-            let fileLocation = bundle.pathForResource("checker-1024", ofType: "png")!
+            let fileLocation = bundle.path(forResource: "checker-1024", ofType: "png")!
             let image = Image(contentsOfFile: fileLocation)!
             return image
             }()
