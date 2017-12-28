@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ASCIIfy"
-  s.version          = "0.3.0"
+  s.version          = "1.0.0"
   s.summary          = "UIImage/NSImage to ASCII art"
   s.description      = <<-DESC
 Includes UIImage and NSImage extensions. String and image output available.
@@ -15,6 +15,7 @@ Includes UIImage and NSImage extensions. String and image output available.
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.11'
 
+  s.swift_version = '4.1'
   s.source_files = 'Pod/Classes/**/*'
 
 end

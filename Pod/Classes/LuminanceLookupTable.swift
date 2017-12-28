@@ -64,7 +64,7 @@ open class LuminanceLookupTable: LookupTable {
 
     open func lookup(_ block: BlockGrid.Block) -> String? {
         let luminance = LuminanceLookupTable.luminance(block, invert: invertLuminance)
-        let nearest = tree.nearest(toElement: KDTreeEntry<Float, String>(key: luminance, value: ""))
+        let nearest = tree.nearest(to: KDTreeEntry<Float, String>(key: luminance, value: ""))
         return nearest?.value
     }
 

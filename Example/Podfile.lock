@@ -1,7 +1,7 @@
 PODS:
-  - ASCIIfy (0.3.1):
+  - ASCIIfy (1.0.0):
     - KDTree
-  - KDTree (0.2.2)
+  - KDTree (1.0.5)
 
 DEPENDENCIES:
   - ASCIIfy (from `../`)
@@ -11,9 +11,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  ASCIIfy: d0b0d80b5f9457157a8bc941298cda876cd23864
-  KDTree: 233db66a659ada28a985f1196c193c6f6283a1d4
+  ASCIIfy: 8dd7f35091a25dc2f224a552ee71a3fcbd738135
+  KDTree: 264be272ac971da97d65be323c35dfffc39e7a4b
 
 PODFILE CHECKSUM: 5c2a79ac76f7b7f11f597c8419e99bb69e641b05
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.4.0.rc.1

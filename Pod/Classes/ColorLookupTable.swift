@@ -61,7 +61,7 @@ extension Color: KDTreePoint {
     }
     #elseif os(OSX)
     fileprivate func components() -> (Double, Double, Double, Double) {
-        let color = usingColorSpaceName(NSCalibratedRGBColorSpace)!
+        let color = usingColorSpaceName(NSColorSpaceName.calibratedRGB)!
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0
         var blue: CGFloat = 0.0
@@ -87,8 +87,8 @@ open class ColorLookupTable: LookupTable {
 
     // MARK: LookupTable
     open func lookup(_ block: BlockGrid.Block) -> String? {
-        let color = Color(colorLiteralRed: block.r, green: block.g, blue: block.b, alpha: block.a)
-        let nearest = tree.nearest(toElement: KDTreeEntry<Color, String>(key: color, value: ""))
+        let color = Color(red: CGFloat(block.r), green: CGFloat(block.g), blue: CGFloat(block.b), alpha: CGFloat(block.a))
+        let nearest = tree.nearest(to: KDTreeEntry<Color, String>(key: color, value: ""))
         return nearest?.value
     }
 

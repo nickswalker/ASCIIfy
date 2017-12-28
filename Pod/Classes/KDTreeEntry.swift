@@ -28,7 +28,7 @@
 import Foundation
 import KDTree
 
-internal func == <K:KDTreePoint, V: Equatable>(lhs: KDTreeEntry<K,V>, rhs: KDTreeEntry<K,V>) -> Bool {
+internal func == <K, V>(lhs: KDTreeEntry<K,V>, rhs: KDTreeEntry<K,V>) -> Bool {
     return lhs.value == rhs.value && lhs.key == rhs.key
 }
 

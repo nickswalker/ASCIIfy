@@ -72,7 +72,7 @@ class WindowController: NSWindowController {
         openPanel.canCreateDirectories = false
         openPanel.message = "Select an image"
         openPanel.beginSheetModal(for: window!) { result in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 let url = openPanel.urls[0]
                 let image = NSImage(contentsOf: url)
 
